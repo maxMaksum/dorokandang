@@ -2,9 +2,13 @@ import React, {useContext, useEffect, useState} from 'react'
 import { Store } from "./contex/myContext"
 import { useRouter } from 'next/router';
 
+const axios = require('axios').default;
+
 function FormAdd() {
 
-  const { addUsers } = useContext(Store);
+  const { addUsers, users } = useContext(Store);
+  const [newUser, setNewUser] = useState([])
+
   const router = useRouter()
   const [dataQ, setDataQ] = useState({
     rm:"",
@@ -15,11 +19,45 @@ function FormAdd() {
     rw:""
 
 })
-    const submit = async (e) => {
+
+console.log(newUser)
+
+
+
+    const saveForm = async (e) => {
         e.preventDefault()
+        console.log(dataQ)
+        const dataNew = await fetchAdd("api/customer/addData",dataQ)
+        router.push("/")
+       
+       
+        
+        
+        
+        // const {message, status, customer} = myAdd.data
+       
+     
+        // console.log(customer)
+        // addUsers(customer)
+        // alert(message)
      }
    
 
+     const fetchAdd = async(url, x)=>{
+      try{
+      const response = await axios.post(url, x)
+
+      console.log(response.data.message)
+      setNewUser([...newUser, response.data.customer])
+      alert(response.data.message)
+
+  
+      return response 
+    }
+    catch (error) {
+      console.error(error);
+    }
+    }
 
      const cancelDataQ = ()=>{
       clearData()
@@ -37,126 +75,108 @@ function FormAdd() {
        })
     }
 
+ 
     let option = [
-      {value : 'SODITAN', label: 'SODITAN'},
-      {value : 'LASEM', label: 'LASEM'},
-      {value : 'ABC', label: 'ABC'},
-      {value : 'LARA', label: 'LARA'}
-    
-    
-    
+      {value : 'Choose Desa', label: 'Choose Desa'},
+      {value : 'Soditan', label: 'Soditan'},
+      {value : 'Jolotundo', label: 'Jolotundo'},
+      {value : 'Babagan', label: 'Babagan'},
+      {value : 'Dorokandang', label: 'Dorokandang'},
+      {value : 'Gedungmulyo', label: 'Gedungmulyo'},
+      {value : 'Dasun', label: 'Dasun'},
+      {value : 'Sumbergirang', label: 'Sumbergirang'},
+      {value : 'Karangturi', label: 'Karangturi'},
+      {value : 'Gedungmulyo', label: 'Gedungmulyo'},
+      {value : 'Dasun', label: 'Dasun'},
+      {value : 'Sumbergirang', label: 'Sumbergirang'},
+      {value : 'Karangturi', label: 'Karangturi'},
+      {value : 'Selopuro', label: 'Gedungmulyo'},
+      {value : 'Karasgede', label: 'Dasun'},
+      {value : 'Ngargomulyo', label: 'Sumbergirang'},
+      {value : 'Karangturi', label: 'Karangturi'},
+      {value : 'Gedungmulyo', label: 'Gedungmulyo'},
+      {value : 'Dasun', label: 'Dasun'},
+      {value : 'Sumbergirang', label: 'Sumbergirang'},
+      {value : 'Karangturi', label: 'Karangturi'},
+      {value: "Ngemplak", label:"Ngemplak"},
+      {value:   "Sendangasri", label:"Sendangasri"},
+      {value:  "Sendangcoyo", label:"Sendangcoyo"},
+      {value: "Binangun", label:"Binangun"},
+      {value:  "Kajar", label:"Kajar"},
+      {value:  "Bonang", label:"Bonang"},
+      {value:   "Gowak", label: "Gowak"},
+      {value:  "Sriombo", label:"Sriombo"},
+      {value:  "Tasiksono", label:"Tasiksono"},
+      {value:  "Ponpes Alhamidyah", label: "Ponpes Alhamidyah"},
+      {value:  "Pondok Almasudi", label:"Pondok Almasudi"},
+      {value:  "Bangunrejo", label:"Bangunrejo"},
+      {value:  "Pondokngemplak", label:"Pondokngemplak"},
+      {value:   "Banggi", label:"Banggi"},
+      {value:   "Gedangan  Rbg", label:"Gedangan  Rbg"},
+      {value:  "Batangan", label:"Batangan"},
+      {value:  "Pondok", label:"Pondok"},
+      {value:   "Panti Asuhan", label:"Panti Asuhan"},
+      {value:   "Pondok At Taslim", label:"Pondok At Taslim"},
+      {value:  "Ponpes Al Muyassar", label:"Ponpes Al Muyassar"},
+      {value:   "Doropayung" , label: "Doropayung"},
     ]
     return (
           <div className='w-full'>
             <p className='text-center p-2'>ADD RM</p>
-            <form className='w-100 flex flex-col items-center space-y-4 '>
-                <label className= "flex flex-col justify-center">
-                <span className="block text-sm font-medium text-slate-700">RM</span>
-                    <input  
-                     className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                     focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                     disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                     invalid:border-pink-500 invalid:text-pink-600
-                     focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                     placeholder="RM"
-                     type='text'
-                     value={dataQ.rm}
-                     onChange ={(e)=>setDataQ({...dataQ, rm:e.target.value})}
-                     />
-                </label>
-                <label className="flex flex-col justify-center">
-                <span className="block text-sm font-medium text-slate-700">NAMA </span>
-                    <input 
-                    type='text'
-                    value={dataQ.nama}
-                    onChange ={(e)=>setDataQ({...dataQ, nama:e.target.value})}
-                    className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                    invalid:border-pink-500 invalid:text-pink-600
-                    focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                    placeholder="NAMA"/>
-                 </label>
-                <label className="flex flex-col justify-center">
-                <span className="block text-sm font-medium text-slate-700">NAMA KK</span>
-                
-                   <input 
-                    type='text'
-                    value={dataQ.namakk}
-                     onChange ={(e)=>setDataQ({...dataQ, namakk:e.target.value})}
-                     className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                     focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                     disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                     invalid:border-pink-500 invalid:text-pink-600
-                     focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                     placeholder="NAMA KK"/>
-                </label>
-                <label className="flex flex-col justify-center">
-                <span className="block text-sm font-medium text-slate-700">RT</span>
-                
-                   <input 
-                    type='text'
-                    value={dataQ.rt}
-                    onChange ={(e)=>setDataQ({...dataQ, rt:e.target.value})}
-                    className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                    invalid:border-pink-500 invalid:text-pink-600
-                    focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                    placeholder="RW"/>
-                </label>
-                <label className="flex flex-col justify-center">
-                <span className ="block text-sm font-medium text-slate-700">RW</span>
-                   <input 
-                    type='text'
-                    value={dataQ.rw}
-                    onChange ={(e)=>setDataQ({...dataQ, rw:e.target.value})}
-                    className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                    focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                    disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                    invalid:border-pink-500 invalid:text-pink-600
-                    focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                    placeholder="RW"/>
-                </label>
+             <div className='flex items-center justify-center'>
+            <form className=" w-96 bg-gray-200 px-4 ">
+            <div className ="mb-2">
+                <label htmlFor="rm" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RM</label>
+                <input type="text" id="rm" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+             
+                value={dataQ.rm}
+                onChange ={(e)=>setDataQ({...dataQ, rm:e.target.value})} />
                
-                <select 
-                            id="desa"
-                            name="desa" 
-                            type='text'
-                            value={dataQ.alamat}
-                            onChange ={(e)=>setDataQ({...dataQ, alamat:e.target.value})}
-                            className="rounded-xs shadow-sm flex flex-start px-2"
-                            >
-                           {option.map((x , i)=>(
-                             <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                             disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                             invalid:border-pink-500 invalid:text-pink-600
-                             focus:invalid:border-pink-500 focus:invalid:ring-pink-500 " key={i} value={x.value}> {x.label}</option>)
-                           )} 
-                </select>
-              
+            </div>
+            <div className ="mb-2">
+                <label htmlFor="nama" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama</label>
+                <input type="text" id="nama" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataQ.nama}
+                onChange ={(e)=>setDataQ({...dataQ, nama:e.target.value})}
+                />
+            </div>
+            <div className ="mb-2">
+                <label htmlFor="nama-kk" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama KK</label>
+                <input type="text" id="nama-kk" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataQ.namakk}
+                onChange ={(e)=>setDataQ({...dataQ, namakk:e.target.value})}
+                />
+            </div>
+            <div className ="mb-2">
+                <label htmlFor="alamat" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama KK</label>
+                <input type="text" id="alamat" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataQ.alamat}
+                onChange ={(e)=>setDataQ({...dataQ, alamat:e.target.value})}
+                />
+            </div>
+            <div className ="mb-2">
+                <label htmlFor="rt" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RT</label>
+                <input type="text" id="rt" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataQ.rt}
+                onChange ={(e)=>setDataQ({...dataQ, rt:e.target.value})}
+                />
+            </div>
+            <div className ="mb-2">
+                <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rw</label>
+                <input type="text" id="rw" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataQ.rw}
+                onChange ={(e)=>setDataQ({...dataQ, rw:e.target.value})}
+                />
+            </div>
+           
+               <div className="flex items-center justify-center space-x-4">
+               <button onClick={(e)=>saveForm(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SAVE</button>
+               <button onClick={(e)=>closeForm(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Close</button>
 
-
-                <div className="flex items-center justify-center space-x-6">
-                    <button 
-                    className='flex items-center justify-center bg-emerald-500 rounded-xs text-md text-white px-3 pt-1'
-                     type="submit" 
-                     value="Submit"
-                     onClick={(e)=>submit(e)}
-                            
-                    >Submit
-                    </button>
-                    <button 
-                    className='flex items-center justify-center bg-emerald-500 rounded-xs text-md text-white px-3 pt-1'
-                     type="submit" 
-                     value="Submit"
-                     onClick={(e)=>cancelDataQ(e)}
-                            
-                    >Cancel
-                    </button>
-                </div>
+               </div>
+          
             </form>
+            </div>
             </div>
        
 

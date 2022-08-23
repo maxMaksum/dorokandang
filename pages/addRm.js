@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 import FormAdd from '../components/FormAdd'
 import Headers from '../components/Headers'
 import TableNew from '../components/TableNew'
@@ -7,11 +8,14 @@ import TableNew from '../components/TableNew'
 
 function addRm() {
   const {data: session, status} = useSession()
+  const router = useRouter()
+
   useEffect(()=>{
     if(!session){
         router.push("/login")
     }
 },[])
+
   return (
     <div className="w-full relative bg-gray-50">
       <Headers />
@@ -19,7 +23,7 @@ function addRm() {
         <FormAdd/>
       </div>
       <div className='flex flex-col items-center justify-center w-100'>
-        <TableNew/>
+        {/* <TableNew/> */}
       
     </div> 
     </div>

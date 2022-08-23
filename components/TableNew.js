@@ -35,8 +35,9 @@ function TableNew() {
             console.log(url,id)
             try{
             const response = await axios.delete(url,id)
-            const {respond1} = await response
-            console.log(respond1)
+            
+            console.log(response.data.mess)
+            return response
           
           }
           catch (error) {
@@ -62,7 +63,7 @@ function TableNew() {
                 </tr>
             </thead>
             <tbody>
-                { users.map((customer, index )=> ( 
+                { users&&users.map((customer, index )=> ( 
                 <tr className="bg-white border-b  bg-gray-50 text-sm sm:text-xl md:text-4xl" key={index}>
                      <td scope="col"  className = "py-4 px-6"> {customer.rm}</td>
                      <td scope="col"  className = "py-4 px-6"> {customer.nama}</td>
@@ -78,7 +79,7 @@ function TableNew() {
                             <div  onClick={(e)=>editData(e, customer._id)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
                             <BorderColorIcon />
                         </div> 
-                        <div  onClick={()=>router.push(`/customer/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                        <div  onClick={()=>router.push(`/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
                             <TouchAppIcon />
                         </div> 
                     </td>       

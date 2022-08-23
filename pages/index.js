@@ -20,7 +20,7 @@ export default function Home() {
         if(!session){
             router.push("/login")
         }
-    },[])
+    },[router])
   
         return (
             

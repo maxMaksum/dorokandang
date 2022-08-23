@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 
 
 function Headers() {
+
+  const router = useRouter()
   
   return (
 

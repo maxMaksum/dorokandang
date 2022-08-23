@@ -18,16 +18,20 @@ function EditForm() {
         e.preventDefault()
         const response = await fetchUpdate("/api/customer/customer",userEdit)
         let updatedUsers =[]
-         for (let i = 0; i<users.length; i++){
-            if(users[i]._id == id){
-                updatedUsers.push(userEdit)
-            }else{
-                updatedUsers.push(users[i])
-            }
+        if(response){
+            for (let i = 0; i<users.length; i++){
+                if(users[i]._id == id){
+                    updatedUsers.push(userEdit)
+                }else{
+                    updatedUsers.push(users[i])
+                }
+    
+             }
+    
+             addUsers(updatedUsers)
 
-         }
-
-         addUsers(updatedUsers)
+        }
+         
 
       
     }
@@ -99,10 +103,9 @@ function EditForm() {
 
                </div>
           
-</form>
+        </form>
+
         </div>
-
-
 
     </div>
   )
