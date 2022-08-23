@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { Store } from "../components/contex/myContext"
+import { Store } from "./contex/myContext"
 import { useRouter } from 'next/router';
 
-function Form3({setShowForm}) {
+function FormAdd() {
 
   const { addUsers } = useContext(Store);
   const router = useRouter()
@@ -15,41 +15,8 @@ function Form3({setShowForm}) {
     rw:""
 
 })
-
-
-    async function putData(url = '', data = {}) {
-     
-        const response = await fetch(url, {
-          method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-          body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
-      }
-      
-
     const submit = async (e) => {
         e.preventDefault()
-        const response = await putData('/api/customer/customer', dataQ)
-          
-        const {product, MESSEGE} = response
-        console.log(response)
-
-        if(response){
-          e.preventDefault();
-          addUsers(product);
-        
-        } 
-
-      
      }
    
 
@@ -84,7 +51,7 @@ function Form3({setShowForm}) {
             <p className='text-center p-2'>ADD RM</p>
             <form className='w-100 flex flex-col items-center space-y-4 '>
                 <label className= "flex flex-col justify-center">
-                <span class="block text-sm font-medium text-slate-700">RM</span>
+                <span className="block text-sm font-medium text-slate-700">RM</span>
                     <input  
                      className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
                      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
@@ -98,7 +65,7 @@ function Form3({setShowForm}) {
                      />
                 </label>
                 <label className="flex flex-col justify-center">
-                <span class="block text-sm font-medium text-slate-700">NAMA </span>
+                <span className="block text-sm font-medium text-slate-700">NAMA </span>
                     <input 
                     type='text'
                     value={dataQ.nama}
@@ -111,7 +78,7 @@ function Form3({setShowForm}) {
                     placeholder="NAMA"/>
                  </label>
                 <label className="flex flex-col justify-center">
-                <span class="block text-sm font-medium text-slate-700">NAMA KK</span>
+                <span className="block text-sm font-medium text-slate-700">NAMA KK</span>
                 
                    <input 
                     type='text'
@@ -125,7 +92,7 @@ function Form3({setShowForm}) {
                      placeholder="NAMA KK"/>
                 </label>
                 <label className="flex flex-col justify-center">
-                <span class="block text-sm font-medium text-slate-700">RT</span>
+                <span className="block text-sm font-medium text-slate-700">RT</span>
                 
                    <input 
                     type='text'
@@ -139,7 +106,7 @@ function Form3({setShowForm}) {
                     placeholder="RW"/>
                 </label>
                 <label className="flex flex-col justify-center">
-                <span class="block text-sm font-medium text-slate-700">RW</span>
+                <span className ="block text-sm font-medium text-slate-700">RW</span>
                    <input 
                     type='text'
                     value={dataQ.rw}
@@ -196,4 +163,4 @@ function Form3({setShowForm}) {
     )
 }
 
-export default Form3
+export default FormAdd

@@ -4,34 +4,26 @@ import {useSession, signIn, signOut, getSession} from "next-auth/react"
 import connectDB from '../../lib/db'
 import Cusomer from '../../model/RM'
 import mongoose from 'mongoose'
-import Form2 from "../../components/Form2"
+
 import Headers from '../../components/Headers'
+import FormDetail from '../../components/FormDetail'
 
 function detailPage({data}) {
     const router = useRouter()
-    const {data: session, status} = useSession()
-    if(!router.isReady){
-      return <>..Loading</>}
-   
-    if (status === "authenticated" && router.isReady) {
+
+  
         return (
           <div className=''>
             <Headers />
 
              <div className="flex flex-col items-center justify-center">
-              <Form2 data1 ={data}/>
+              <FormDetail data1 ={data}/>
               </div>
             </div>
         )
-    } else {
-        return (
-            <div>
-                not
-            </div>
-        )
-    }
+    } 
 
-}
+
 
 export default detailPage
 

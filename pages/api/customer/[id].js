@@ -1,5 +1,6 @@
-import Cusomer from "../../../model/RM"
-import connectDB from "../../../lib/db"
+import { connectToDatabase } from "../../../lib/monggodb"
+import {getSession} from "next-auth/react"
+const ObjectId = require('mongodb').ObjectId;
 
 const handler = async (req, res) => {
   const {id} =req.query
@@ -35,6 +36,7 @@ const getHandler = async (req, res) => {
   await db.disconnect();
   res.send(product);
 };
+
 const putHandler = async (req, res) => {
   console.log(req.query.id)
   await connectDB();

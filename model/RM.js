@@ -1,20 +1,19 @@
-import mongoose, { Schema } from 'mongoose';
+// import mongoose, { Schema } from 'mongoose';
 
-const customerSchema = new mongoose.Schema(
-  {
-    _id:{ type: Schema.Types.ObjectId, auto:true},
-    rm: { type: String, required: true},
-    nama: { type: String, required: false },
-    namakk: { type: String, required: false},
-    alamat: { type: String, required: false },
-    rt: { type: String, required: false},
-    rw: { type: String, required: false},
+// const customerSchema = new mongoose.Schema(
+//   {
+//     rm: { type: String, required: true},
+//     nama: { type: String, required: false },
+//     namakk: { type: String, required: false},
+//     alamat: { type: String, required: false },
+//     rt: { type: String, required: false},
+//     rw: { type: String, required: false},
 
-  },
-  {
-    timestamps: true,
-  }
-);
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
 
-const Cusomer = mongoose.models.Cusomer || mongoose.model('Cusomer', customerSchema);
-export default Cusomer;
+// const Customer = mongoose.models.Customer || mongoose.model('Customer', customerSchema);
+// export default Customer;

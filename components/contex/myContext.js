@@ -1,31 +1,29 @@
 import { createContext, useEffect, useState } from 'react';
 
-export const Store = createContext( { users:[]});
+export const Store = createContext();
 
 export function StoreProvider({ children }) {
   const [users, setUsers] = useState([]);
-
-
+  const [userEdit, setUserEdit] = useState({});
+  const [showForm, setShowForm] = useState(false);
  
-
-  
 const addUsers = (newUser) => {
-  setUsers( [...users, newUser]);
+  setUsers(newUser);
 };
 
 const readUsers = () => {
    return users
 };
 
-const updateUsers = (id) => {
-  const editUser = users.map(user => {
+const updateUsers = (id, editUser) => {
+  const editUsers = users.map(user => {
     if (user._id === id) {
       return editUser;
     }else{
-      return user;
+      return users;
     }
   })
-  setUsers( editUser)
+  setUsers( editUsers)
 };
 
 const removeUsers = (id)=>{
@@ -50,7 +48,11 @@ const resetUsers = (id)=>{
       readUsers,
       resetUsers,
       removeUsers,
-      updateUsers
+      updateUsers,
+      showForm,
+      setShowForm,
+      userEdit, 
+      setUserEdit
   
     }}>
   

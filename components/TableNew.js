@@ -3,80 +3,86 @@ import { Store } from "./contex/myContext"
 import { useRouter } from 'next/router';
 import CloseIcon from '@mui/icons-material/Close';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+const axios = require('axios').default;
 
 function TableNew() {
 
-    const { addUser, users, removeUsers } = useContext(Store);
+    const { addUser, users, removeUsers, showForm, setShowForm, setUserEdit } = useContext(Store);
     const router = useRouter()
-    
-    const [b] = users
-
-  
+ 
     const deleteData = async (e, customersId) => {
         e.preventDefault()
        if(customersId){
                 console.log(customersId)
-                const response = await deleteDataq('/api/id/'+customersId, customersId) 
+                const response =  fetchDelete("/api/customer/customer",{data:customersId})
                 await removeUsers(customersId)
-                return response 
+                // return response 
             }
         
         }
-
-        async function deleteDataq(url = '', data = {}) {
-
-            const response = await fetch(url, {
-            method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-            });
-            return response.json(); // parses JSON response into native JavaScript objects
-        }
+      
+        const editData = async (e, customersId) => {
+            e.preventDefault()
+            const index = users.find(product => product._id===customersId);
+            console.log(index)
+            setShowForm(!showForm)
+            setUserEdit(index)
+            console.log(customersId)
+            
+            }
+        const fetchDelete = async(url, id)=>{
+            console.log(url,id)
+            try{
+            const response = await axios.delete(url,id)
+            const {respond1} = await response
+            console.log(respond1)
+          
+          }
+          catch (error) {
+            console.error(error);
+          }
+          }
+           
 
 
   return (
-    <div className=' w-full my-4 py-6'>
+    <div className='overflow-x-auto relative'>
        
-        <table class="table-auto w-full">
-            <thead>
-                <tr className='space-y-2'>
-                    <th className='text-center'>RM</th>
-                    <th className='text-center'>NAMA</th>
-                    <th className='text-center'>NAMA KK</th>
-                    <th className='text-center'>ALAMAT</th>
-                    <th className='text-center hidden sm-inline-flex'>RT</th>
-                    <th className='text-center hidden sm-inline-flex'>RT</th>
-                    <th className='text-center'>ACT</th>
+        <table className ="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" className="py-3 px-6">RM</th>
+                    <th scope="col" className="py-3 px-6">NAMA</th>
+                    <th scope="col" className="py-3 px-6">NAMA KK</th>
+                    <th scope="col" className="py-3 px-6">ALAMAT</th>
+                    <th scope="col" className= 'py-3 px-6 hidden sm-inline-flex'>RT</th>
+                    <th scope="col" className= 'py-3 px-6 hidden sm-inline-flex'>RT</th>
+                    <th scope="col" className= 'py-3 px-6'>ACT</th>
                 </tr>
             </thead>
             <tbody>
                 { users.map((customer, index )=> ( 
-                <tr className="className='space-y-2" key={index}>
-                                <td  className='text-center'>{customer.rm}</td>
-                                <td  className='text-center'>{customer.nama}</td>
-                                <td  className='text-center'>{customer.namakk}</td>
-                                <td  className='text-center'>{customer.alamat}</td>
-                                <td  className='text-center'>{customer.rt}</td>
-                                <td  className='text-center'>{customer.rw}</td>
-                                <div className='flex items-center justify-center space-x-1'>
-                                <div onClick={(e)=>deleteData(e, customer._id)} className='  cursor-pointer w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center'>
-                                   <CloseIcon />
-                                </div>
-                                <div  onClick={()=>router.push(`/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center'>
-                                   <TouchAppIcon />
-                                </div>
-                                </div>
-                            
+                <tr className="bg-white border-b  bg-gray-50 text-sm sm:text-xl md:text-4xl" key={index}>
+                     <td scope="col"  className = "py-4 px-6"> {customer.rm}</td>
+                     <td scope="col"  className = "py-4 px-6"> {customer.nama}</td>
+                     <td scope="col"  className = "py-4 px-6"> {customer.namakk}</td>
+                     <td scope="col"  className = "py-4 px-6"> {customer.alamat}</td>
+                     <td scope="col"  className = "py-4 px-6 hidden sm-inline-flex">{customer.rt}</td>
+                     <td scope="col"  className = "py-4 px-6 hidden sm-inline-flex">{customer.rw}</td>
+
+                     <td scope="col"  className = "py-4 px-6 flex space-x-4 sm:space-x-8">
+                          <div onClick={(e)=>deleteData(e, customer._id)} className=' text-green cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                             <CloseIcon />
+                            </div>
+                            <div  onClick={(e)=>editData(e, customer._id)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                            <BorderColorIcon />
+                        </div> 
+                        <div  onClick={()=>router.push(`/customer/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                            <TouchAppIcon />
+                        </div> 
+                    </td>       
                 </tr>))}
-                
             </tbody>
         </table>
     </div>
