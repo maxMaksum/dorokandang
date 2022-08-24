@@ -29,17 +29,6 @@ console.log(newUser)
         console.log(dataQ)
         const dataNew = await fetchAdd("api/customer/addData",dataQ)
         router.push("/")
-       
-       
-        
-        
-        
-        // const {message, status, customer} = myAdd.data
-       
-     
-        // console.log(customer)
-        // addUsers(customer)
-        // alert(message)
      }
    
 
@@ -120,6 +109,7 @@ console.log(newUser)
       {value:  "Ponpes Al Muyassar", label:"Ponpes Al Muyassar"},
       {value:   "Doropayung" , label: "Doropayung"},
     ]
+    
     return (
           <div className='w-full'>
             <p className='text-center p-2'>ADD RM</p>

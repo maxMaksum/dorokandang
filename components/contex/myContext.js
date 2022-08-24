@@ -15,15 +15,13 @@ const readUsers = () => {
    return users
 };
 
+
 const updateUsers = (id, editUser) => {
-  const editUsers = users.map(user => {
-    if (user._id === id) {
-      return editUser;
-    }else{
-      return users;
-    }
-  })
-  setUsers( editUsers)
+
+  const editUsers = users.filter(user => {
+    return user._id !== id})
+  setUsers([...editUsers, editUser])
+
 };
 
 const removeUsers = (id)=>{

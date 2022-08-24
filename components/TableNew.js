@@ -9,15 +9,18 @@ const axios = require('axios').default;
 function TableNew() {
 
     const { addUser, users, removeUsers, showForm, setShowForm, setUserEdit } = useContext(Store);
-    const router = useRouter()
- 
+   
+
+  const router = useRouter()
+
     const deleteData = async (e, customersId) => {
         e.preventDefault()
        if(customersId){
                 console.log(customersId)
                 const response =  fetchDelete("/api/customer/customer",{data:customersId})
+                const data = await response
                 await removeUsers(customersId)
-                // return response 
+                return data
             }
         
         }
@@ -27,17 +30,18 @@ function TableNew() {
             const index = users.find(product => product._id===customersId);
             console.log(index)
             setShowForm(!showForm)
-            setUserEdit(index)
-            console.log(customersId)
+            // setUserEdit(index)
+           
             
             }
         const fetchDelete = async(url, id)=>{
             console.log(url,id)
             try{
             const response = await axios.delete(url,id)
-            
-            console.log(response.data.mess)
-            return response
+            const data = response.data
+            alert(data.message)
+            console.log(data.message)
+            return data
           
           }
           catch (error) {

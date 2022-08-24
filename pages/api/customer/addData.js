@@ -30,12 +30,8 @@ export default async function handler(req, res) {
 async function addPost(req, res) {
   try {
       // connect to the database
-      console.log("ok ok")
       let { db } = await connectToDatabase();
-     
-
       const {rm, nama, namakk, alamat, rt, rw} =req.body
-     
       const customer = await db.collection("customers").insertOne({
         rm:rm,
         nama:nama,
@@ -46,9 +42,6 @@ async function addPost(req, res) {
       });
       const _id = await customer.insertedId.toString()
    
-      
-   
-      console.log(_id)
     
       return res.json({
           message: 'Post added successfully',
@@ -100,6 +93,7 @@ async function addPost(req, res) {
 async function updatePost(req, res) {
     try {
         // connect to the database
+        
         let { db } = await connectToDatabase();
         let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
         console.log(nama)
