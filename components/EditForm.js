@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Store } from './contex/myContext';
-import CloseIcon from '@mui/icons-material/Close';
-import { AddBusinessRounded } from '@mui/icons-material';
 
 import { useRouter } from 'next/router';
 const axios = require('axios');
 
 function EditForm({dataIsun}) {
-    const { addUsers, users, removeUsers, showForm,userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
-    const [myId, setMyId] = useState("")
+    const { addUsers, users, removeUsers,userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
+
     const router = useRouter()
    
    useEffect(()=>{
@@ -45,7 +43,7 @@ function EditForm({dataIsun}) {
 
 
 
-    const saveForm = async (e)=>{
+    const saveForm = async (e, id)=>{
         e.preventDefault()
         console.log(userEdit)
         const res = await fetchUpdate(`/api/customer/${id}`, userEdit)
@@ -175,7 +173,7 @@ function EditForm({dataIsun}) {
            
              <div className="flex items-center justify-center space-x-4">
                <button onClick={(e)=>saveForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SAVE</button>
-               <button onClick={(e)=>closeForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
+               <button onClick={(e)=>closeForm(e, userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
               
 
             </div>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import FormAdd from '../components/FormAdd'
 import Headers from '../components/Headers'
-import TableNew from '../components/TableNew'
+
 
 
 function addRm() {

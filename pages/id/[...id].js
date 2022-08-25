@@ -13,9 +13,6 @@ function detailPage({dataIsun}) {
 
     const {data: session, status} = useSession()
     const router = useRouter()
-    const { addUsers, setShowForm,updateUsers } = useContext(Store);
-    const [myId, setMyId] = useState({})
-    console.log(dataIsun)
    
     if(session){
       return (

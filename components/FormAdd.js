@@ -20,6 +20,11 @@ function FormAdd() {
 
 })
 
+const closeForm =(e)=>{
+  e.preventDefault()
+  router.push("/")
+}
+
     const saveForm = async (e) => {
         e.preventDefault()
         console.log(dataQ)
