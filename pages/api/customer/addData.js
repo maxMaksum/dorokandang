@@ -1,6 +1,5 @@
 import { connectToDatabase } from "../../../lib/monggodb"
 import {getSession} from "next-auth/react"
-import { FindCursor } from "mongodb";
 import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
@@ -64,58 +63,4 @@ async function addPost(req, res) {
   
  
 
-  async function deletePost(req, res) {
-    try {
-        // Connecting to the database
-        let { db } = await connectToDatabase();
-       
 
-        // Deleting the post
-        // await db.collection('customers').deleteOne({
-        //     _id: new ObjectId(req.body),
-        // });
-
-        // returning a message
-        return res.json({
-            message: 'Post deleted successfully',
-            success: true,
-        });
-    } catch (error) {
-
-        // returning an error
-        return res.json({
-            message: new Error(error).message,
-            success: false,
-        });
-    }
-}
-
-async function updatePost(req, res) {
-    try {
-        // connect to the database
-        
-        let { db } = await connectToDatabase();
-        let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
-        console.log(nama)
-       
-        // await db.collection('customer').updateOne(
-        //     {
-        //         _id: new ObjectId(req.body._id),
-        //     },
-        //     { $set: 
-        //         { rm:req.body.rm, nama:req.body.nama,namakk:req.body.namakk,alamat:req.body.alamat,rt:req.body.rt,rw:req.body.rw,}
-        //    } 
-        // );
-        return res.json({
-            message: 'Post updated successfully',
-            success: true,
-        });
-    } catch (error) {
-
-        // return an error
-        return res.json({
-            message: new Error(error).message,
-            success: false,
-        });
-    }
-}

@@ -4,14 +4,14 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useRouter } from 'next/router';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { useSession } from "next-auth/react";
-import { collection, addDoc, doc, getDoc, where, query, getDocs,  } from "firebase/firestore";
-import dataQ  from "../dataQ"
+
+
 const axios = require('axios').default;
-import {db} from "../firebaseConfig"
+
 
 function Search() {
 
-  
+    const [newStatus, setStatus] = useState(false)
     const { addUsers, readUsers, users, setUsers } = useContext(Store);
     const {data: session, status} = useSession()
     
@@ -32,21 +32,29 @@ function Search() {
 
     })
  
+   
     const Search = async (e) => {
         e.preventDefault()
-        console.log(data)
-        fetchSearch("/api/customer/customer",{data})
        
-         
+       const data = await fetchSearch("/api/customer/customer",{...data})
+       setShowSearch(true)
+       return data
+    
      }
      
 
-    const fetchSearch = async(url, x)=>{
+    const fetchSearch = async(url)=>{
+    
         try{
-        const response = await axios.post(url, x)
+        const response = await axios.post(url, data)
+        console.log(response)
+        if(response.status){
+            setStatus(true)
+        }
         const {respond1} = await response.data
-        console.log(respond1)
         addUsers(respond1)
+        setShowSearch(!showSearch)
+        return respond1
       }
       catch (error) {
         console.error(error);
@@ -125,6 +133,7 @@ function Search() {
                     > <SearchRoundedIcon /></button>
                 </div>
 
+                            
                 <div className={
                     showSearch ? 'hidden' : 'block text-black absolute left-18 top-14 space-y-4 rounded w-5/6' 
                 }>
@@ -143,7 +152,7 @@ function Search() {
                         id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
                     </div>
                     <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat</label>
-                    <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select  onChange ={(e)=>setData({...data, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         
                         {option.map((x , i)=>(
                              <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400

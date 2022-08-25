@@ -5,7 +5,7 @@ import { Store } from '../components/contex/myContext'
 import { useRouter } from 'next/router'
 import Headers from '../components/Headers'
 import TableNew from '../components/TableNew'
-import EditForm from '../components/EditForm'
+import EditForm2 from '../components/EditForm2'
 
 
 
@@ -14,7 +14,7 @@ export default function Home() {
     const router = useRouter()
     const {data: session, status} = useSession()
     const { addUser, users, resetUsers, showForm } = useContext(Store);
-    console.log(showForm)
+   
 
     useEffect(()=>{
         if(!session){
@@ -22,6 +22,7 @@ export default function Home() {
         }
     },[router])
   
+    
         return (
             
             <div  className="w-full relative bg-gray-50 ">
@@ -37,7 +38,7 @@ export default function Home() {
                       
                     </main>
                     <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
-                         <EditForm/>
+                         <EditForm2/>
                     </div>
             </div>
            

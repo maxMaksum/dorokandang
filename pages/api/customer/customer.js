@@ -4,7 +4,7 @@ import {getSession} from "next-auth/react"
 import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
-    // switch the methods
+   
     switch (req.method) {
         case 'POST': {
             return getPosts(req, res);
@@ -17,23 +17,22 @@ export default async function handler(req, res) {
         case 'DELETE': {
             return deletePost(req, res);
         }
+        default:
+            return res.status(200).json({ name: 'John Doe' })
     }
 }
  const getPosts = async (req, res) => {
-    const session = await getSession({ req });
-    console.log(req.body.data)
-    const {rm, nama, namakk, alamat} = req.body.data
+   
+    const {rm, nama, namakk, alamat} = req.body
+  
  
     try {
-      let rme =""
-      let name =""
-      let namekk ="legiman"
-      let address =""
+ 
       let { db } = await connectToDatabase();
 
       if(rm){
         const res1 = await db.collection('customers').find(
-              { rm: { $regex: `${rm}`, $options: 'i' }})
+              { rm: { $regex: rm, $options: 'i' }})
       
           .sort({ rm: -1 })
           .toArray();
@@ -50,7 +49,7 @@ export default async function handler(req, res) {
         $and:[
           { nama: { $regex: nama, $options: 'i' }},
           { namakk: { $regex: namakk, $options: 'i' }},
-          { alamat: { $regex:alamat, $options: 'i' }}
+          { alamat: { $regex: alamat, $options: 'i' }}
        
       
       ]})

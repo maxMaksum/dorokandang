@@ -14,15 +14,11 @@ function FormAdd() {
     rm:"",
     nama:"",
     namakk:"",
-    alamat:"",
     rt:"",
-    rw:""
+    rw:"", 
+    alamat:""
 
 })
-
-console.log(newUser)
-
-
 
     const saveForm = async (e) => {
         e.preventDefault()
@@ -36,9 +32,10 @@ console.log(newUser)
       try{
       const response = await axios.post(url, x)
 
-      console.log(response.data.message)
+
       setNewUser([...newUser, response.data.customer])
       alert(response.data.message)
+      addUsers(newUser)
 
   
       return response 
@@ -137,13 +134,7 @@ console.log(newUser)
                 onChange ={(e)=>setDataQ({...dataQ, namakk:e.target.value})}
                 />
             </div>
-            <div className ="mb-2">
-                <label htmlFor="alamat" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama KK</label>
-                <input type="text" id="alamat" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
-                value={dataQ.alamat}
-                onChange ={(e)=>setDataQ({...dataQ, alamat:e.target.value})}
-                />
-            </div>
+            
             <div className ="mb-2">
                 <label htmlFor="rt" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RT</label>
                 <input type="text" id="rt" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
@@ -152,11 +143,24 @@ console.log(newUser)
                 />
             </div>
             <div className ="mb-2">
-                <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rw</label>
+                <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RW</label>
                 <input type="text" id="rw" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
                 value={dataQ.rw}
                 onChange ={(e)=>setDataQ({...dataQ, rw:e.target.value})}
                 />
+            </div>
+            <div>
+                <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"></label>
+                    <select  onChange ={(e)=>setDataQ({...dataQ, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        
+                        {option.map((x , i)=>(
+                             <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+                             disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+                             invalid:border-pink-500 invalid:text-pink-600
+                             focus:invalid:border-pink-500 focus:invalid:ring-pink-500 " key={i} value={x.value||""}> {x.label||""}</option>)
+                           )} 
+                    </select>  
             </div>
            
                <div className="flex items-center justify-center space-x-4">

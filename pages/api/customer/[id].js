@@ -54,8 +54,7 @@ const putHandler = async (req, res) => {
  
   let { db } = await connectToDatabase();
   let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
-  // console.log(_id)
-  // console.log(nama)
+
 
   var myquery = {_id: new ObjectId(_id)};
   var newvalues = { $set:  { rm:rm, nama:nama,namakk:namakk,alamat:alamat,rt:rt,rw:rw, alamat:alamat} };
