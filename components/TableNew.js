@@ -72,7 +72,7 @@ function TableNew() {
             </thead>
             <tbody>
                 { users&&users.map((customer, index )=> ( 
-                <tr className="bg-white border-b  bg-gray-50 text-sm sm:text-xl md:text-4xl" key={index}>
+                <tr className="bg-white border-b  bg-gray-50 text-sm sm:text-xl md:text-2xl" key={index}>
                      <td scope="col"  className = "py-4 px-6"> {customer.rm}</td>
                      <td scope="col"  className = "py-4 px-6"> {customer.nama}</td>
                      <td scope="col"  className = "py-4 px-6"> {customer.namakk}</td>

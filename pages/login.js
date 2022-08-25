@@ -17,11 +17,13 @@ useEffect(()=>{
 
     return (
 
-        <div className='w-full h-screen bg-gray-100 '>
-           <div  className='flex items-center justify-center'>
-              <button onClick={()=>signIn()}>
-               SignIn
-            </button>
+        <div className='w-full h-screen bg-green-900 text-gray-50'>
+           <div  className='flex flex-col w-full h-full items-center justify-center space-y-4 font-bold'>
+              <button onClick={()=>signIn()} className="bg-emerald-500 text-uppercase rounded-md text-bold p-4">
+                  SIGNIN
+               </button>
+
+               <h2 className="border-b border-gray-200 dark:border-gray-700">Project By: Viky Febry Q.</h2>
            </div>
         </div>
         
