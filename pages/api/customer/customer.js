@@ -32,11 +32,13 @@ export default async function handler(req, res) {
 
       if(rm){
         const res1 = await db.collection('customers').find(
-              { rm: { $regex: rm, $options: 'i' }})
+              { rm: { $regex:`^${rm}.*`, $options: 'i' }})
+       
       
           .sort({ rm: -1 })
           .toArray();
        
+          console.log(res1)
           return res.json({
             message: 'Post added successfully',
             success: true,

@@ -13,7 +13,7 @@ export default function Home() {
 
     const router = useRouter()
     const {data: session, status} = useSession()
-    const { addUser, users, resetUsers, showForm } = useContext(Store);
+    const { addUser, users, resetUsers, showForm, showSearchOK } = useContext(Store);
    
 
     useEffect(()=>{
@@ -34,8 +34,8 @@ export default function Home() {
                 <Headers/>
                     <main className='relative'>
                        <TableNew />
-                       
-                      
+                       <div className = {showSearchOK?"bg-green-900 h-screen w-screen absolute top-0 ":"hidden"}></div>
+
                     </main>
                     <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
                          <EditForm2/>

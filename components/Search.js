@@ -12,8 +12,15 @@ const axios = require('axios').default;
 function Search() {
 
     const [newStatus, setStatus] = useState(false)
-    const { addUsers, readUsers, users, setUsers } = useContext(Store);
+    const { addUsers, readUsers, users, setUsers, setShowSearchOK, showSearchOK } = useContext(Store);
+    const [showSearch, setShowSearch] = useState(true)
     const {data: session, status} = useSession()
+
+    const showS = (e)=>{
+        e.preventDefault()
+        setShowSearch(!showSearch)
+        setShowSearchOK(!showSearchOK)
+    }
     
  useEffect(()=>{
       if(!session){
@@ -22,7 +29,7 @@ function Search() {
   },[])
 
     const router = useRouter()
-    const [showSearch, setShowSearch] = useState(true)
+   
 
     const [data, setData] = useState({
         rm:"",
@@ -35,9 +42,9 @@ function Search() {
    
     const Search = async (e) => {
         e.preventDefault()
-       
        const data = await fetchSearch("/api/customer/customer",{...data})
        setShowSearch(true)
+       setShowSearchOK(false)
        return data
     
      }
@@ -112,7 +119,7 @@ function Search() {
                 <div className='flex items-center justify-center space-x-2 w-full'>
                     <div className='flex items-center justify-center rounded animate-bounce '>
                        <KeyboardDoubleArrowDownIcon onClick={
-                                () => setShowSearch(!showSearch)
+                                (e) =>showS(e)
                             } />
                     </div>
                     <div className ="w-5/6">
@@ -135,7 +142,7 @@ function Search() {
 
                             
                 <div className={
-                    showSearch ? 'hidden' : 'block text-black absolute left-18 top-14 space-y-4 rounded w-5/6' 
+                    showSearch ? 'hidden' : 'block text-black absolute left-18 top-20 space-y-4 rounded w-5/6 bg-green-900 ' 
                 }>
               
                     <div className=" rounded-sm shadow-sm">
@@ -151,7 +158,7 @@ function Search() {
                         onChange ={(e)=>setData({...data, namakk:e.target.value})}
                         id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
                     </div>
-                    <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat</label>
+                    {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat</label> */}
                     <select  onChange ={(e)=>setData({...data, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         
                         {option.map((x , i)=>(

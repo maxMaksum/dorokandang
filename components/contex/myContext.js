@@ -6,6 +6,7 @@ export function StoreProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [userEdit, setUserEdit] = useState({});
   const [showForm, setShowForm] = useState(false);
+  const [showSearchOK, setShowSearchOK] = useState(true);
  
 const addUsers = (newUser) => {
   setUsers(newUser);
@@ -50,7 +51,8 @@ const resetUsers = (id)=>{
       showForm,
       setShowForm,
       userEdit, 
-      setUserEdit
+      setUserEdit,
+      showSearchOK, setShowSearchOK
   
     }}>
   
