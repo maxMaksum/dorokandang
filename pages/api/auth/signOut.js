@@ -1,22 +1,24 @@
 import { getProviders, signIn,signOut } from "next-auth/react"
 
-export default function SignIn({ providers }) {
+export default function SignOut () {
+
+  console.log(providers)
   return (
     <>
-      {Object.values(providers).map((provider) => (
+ 
         <div key={provider.name}>
-          <button onClick={() => signOut(provider.id)}>
+          <button onClick={signOut()}>
             Sign in with {provider.name}
           </button>
         </div>
-      ))}
+      
     </>
   )
 }
 
-export async function getServerSideProps(context) {
-  const providers = await getProviders()
-  return {
-    props: { providers },
-  }
-}
+// export async function getServerSideProps(context) {
+//   const providers = await getProviders()
+//   return {
+//     props: { providers },
+//   }
+// }

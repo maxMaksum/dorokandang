@@ -8,7 +8,7 @@ import Headers from '../components/Headers'
 
 
 function addRm() {
-  const {data: session, status} = useSession()
+  const {data: session, status} = useSession({ required: true })
   const router = useRouter()
 
   useEffect(()=>{

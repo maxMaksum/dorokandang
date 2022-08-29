@@ -6,7 +6,10 @@ import Head from 'next/head'
 
 export default function login() {
     const {data: session} = useSession()
+    // let session = session
     const router = useRouter()
+  
+    console.log(session)
 
 useEffect(()=>{
   if(session){
@@ -25,7 +28,7 @@ useEffect(()=>{
                     <link rel="icon" href="/favicon.ico"/>
           </Head>
            <div  className='flex flex-col w-full h-full items-center justify-center space-y-4 font-bold'>
-              <button onClick={()=>signIn()} className="bg-emerald-500 text-uppercase rounded-md text-bold p-4">
+              <button onClick={()=>signIn('google')} className="bg-emerald-500 text-uppercase rounded-md text-bold p-4">
                   SIGNIN
                </button>
 
@@ -40,12 +43,13 @@ useEffect(()=>{
 }
 
 export async function getServerSideProps(context) {
- 
- 
+
+
+ const session = await getSession(context)
+ console.log(session)
   return {
     props: {
-    
-      
-    },
+      session
+    }
   };
 }
