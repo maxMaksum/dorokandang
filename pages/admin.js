@@ -32,8 +32,7 @@ function admin() {
         <div className='w-100 flex items-center justify-center mt-8'>
             <FormAdmin/>
         </div>
-      <div className='flex flex-col items-center justify-center w-100'>
-      </div>
+     
 
     </div>
   )

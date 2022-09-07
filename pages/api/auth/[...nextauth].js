@@ -31,8 +31,6 @@ export default NextAuth({
       const existingUser = await db.collection('users')
       .find({ email: { $regex: token.email, $options: 'i' }},).toArray()
 
-      console.log(existingUser[0])
-
         if (token?._id && existingUser ) {
           session.user._id = token._id;
           session.user.admin = existingUser[0].role
