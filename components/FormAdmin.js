@@ -1,0 +1,64 @@
+import React, { useState } from 'react'
+const axios = require('axios').default;
+
+function FormAdmin() {
+    const [admin, setAdmin] =useState({email:"", role:false})
+
+    const saveForm = async (e)=>{
+        e.preventDefault()
+        const dataNew = await fetchAdd("/api/admin/admin",admin)
+        console.log(admin)
+        // setAdmin({email:"", role:false})
+
+    }
+
+    const fetchAdd = async(url, x)=>{
+      try{
+        const response = await axios.post(url, x)
+        return response 
+      }
+      catch (error) {
+        console.error(error);
+      }
+      }
+
+  return (
+    <div className='w-full '>
+        <div className='flex items-center justify-center'>
+            <form className=" w-96 bg-gray-200 px-4">
+                <div className ="mb-2">
+                    <label htmlFor="nama" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                    <input type="text" id="nama" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                    placeholder='puskesmaslasem@gmail.com'
+                    value={admin.email}
+                    onChange ={(e)=>setAdmin({...admin, email:e.target.value})}
+                    />
+                </div>
+
+                <div className ="mb-2">
+                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Role</label>
+                    <select  
+                    onChange ={(e)=>setAdmin({...admin, role:e.target.value})}
+                    id="role"
+                    placeholder='false'
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+                        focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+                        disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+                        invalid:border-pink-500 invalid:text-pink-600
+                        focus:invalid:border-pink-500 focus:invalid:ring-pink-500 " value={false}> false</option>
+                        <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+                        focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+                        disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+                        invalid:border-pink-500 invalid:text-pink-600
+                        focus:invalid:border-pink-500 focus:invalid:ring-pink-500 " value={true}>true</option> 
+                    </select>  
+                    <button onClick={(e)=>saveForm(e)} type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SAVE</button>
+                </div>
+            </form>
+         </div>
+    </div>
+  )
+}
+
+export default FormAdmin

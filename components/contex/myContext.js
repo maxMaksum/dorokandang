@@ -16,9 +16,7 @@ const readUsers = () => {
    return users
 };
 
-
 const updateUsers = (id, editUser) => {
-
   const editUsers = users.filter(user => {
     return user._id !== id})
   setUsers([...editUsers, editUser])
@@ -27,12 +25,10 @@ const updateUsers = (id, editUser) => {
 
 const removeUsers = (id)=>{
   const userLists = users.filter((user) => user._id !== id );
-
   setUsers( userLists)
 }
 
-const resetUsers = (id)=>{
-  // const userLists = users.filter((user) => user._id !== id );
+const resetUsers = ()=>{
 
   setUsers([])
 }

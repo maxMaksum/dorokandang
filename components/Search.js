@@ -115,7 +115,7 @@ function Search() {
     return (
 
         <div className='flex flex-col justify-center items-start'>
-            <div className='flex flex-col items-center mb-2 py-2 relative w-full relative'>
+            <form onSubmit= {(e)=>Search(e)} className='flex flex-col items-center mb-2 py-2 relative w-full relative'>
                 <div className='flex items-center justify-center space-x-2 w-full'>
                     <div className='flex items-center justify-center rounded animate-bounce '>
                        <KeyboardDoubleArrowDownIcon onClick={
@@ -136,7 +136,6 @@ function Search() {
                     className='flex items-center align-center'
                     type="submit" 
                     value="Submit"
-                    onClick={(e)=>Search(e)}
                     > <SearchRoundedIcon /></button>
                 </div>
 
@@ -170,7 +169,7 @@ function Search() {
                            )} 
                     </select>  
                 </div>
-            </div>
+            </form>
             
         </div>
 
