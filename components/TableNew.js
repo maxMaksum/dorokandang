@@ -8,11 +8,7 @@ const axios = require('axios').default;
 
 function TableNew() {
 
-    const { addUsers, users, removeUsers, showForm, setShowForm, setUserEdit } = useContext(Store);
-
-
-   
-
+  const { addUsers, users, removeUsers, showForm, setShowForm, setUserEdit } = useContext(Store);
   const router = useRouter()
   const editData=(e, x)=>{
  

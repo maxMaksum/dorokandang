@@ -1,5 +1,5 @@
 import { connectToDatabase } from "../../lib/monggodb"
-import dataQ from "../../dataQ"
+import userQ from "../../userQ"
 
 export default async function  handler(req, res) {
 
@@ -8,7 +8,7 @@ export default async function  handler(req, res) {
         let { db } = await connectToDatabase();
      
         // const customer = await db.collection("customers").deleteMany({});
-        await db.collection("customers").insertMany(dataQ);
+        await db.collection("customers").insertMany(userQ);
 
         return res.json({
             message: 'Post added successfully'});

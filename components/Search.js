@@ -4,6 +4,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useRouter } from 'next/router';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { useSession } from "next-auth/react";
+import SearchInput from "./SearchInput";
 
 
 const axios = require('axios').default;
@@ -69,50 +70,11 @@ function Search() {
       }
       }
 
-      let option = [
-        {value : 'Choose Desa', label: 'Choose Desa'},
-        {value : 'Soditan', label: 'Soditan'},
-        {value : 'Jolotundo', label: 'Jolotundo'},
-        {value : 'Babagan', label: 'Babagan'},
-        {value : 'Dorokandang', label: 'Dorokandang'},
-        {value : 'Gedungmulyo', label: 'Gedungmulyo'},
-        {value : 'Dasun', label: 'Dasun'},
-        {value : 'Sumbergirang', label: 'Sumbergirang'},
-        {value : 'Karangturi', label: 'Karangturi'},
-        {value : 'Gedungmulyo', label: 'Gedungmulyo'},
-        {value : 'Dasun', label: 'Dasun'},
-        {value : 'Sumbergirang', label: 'Sumbergirang'},
-        {value : 'Karangturi', label: 'Karangturi'},
-        {value : 'Selopuro', label: 'Gedungmulyo'},
-        {value : 'Karasgede', label: 'Dasun'},
-        {value : 'Ngargomulyo', label: 'Sumbergirang'},
-        {value : 'Karangturi', label: 'Karangturi'},
-        {value : 'Gedungmulyo', label: 'Gedungmulyo'},
-        {value : 'Dasun', label: 'Dasun'},
-        {value : 'Sumbergirang', label: 'Sumbergirang'},
-        {value : 'Karangturi', label: 'Karangturi'},
-        {value: "Ngemplak", label:"Ngemplak"},
-        {value:   "Sendangasri", label:"Sendangasri"},
-        {value:  "Sendangcoyo", label:"Sendangcoyo"},
-        {value: "Binangun", label:"Binangun"},
-        {value:  "Kajar", label:"Kajar"},
-        {value:  "Bonang", label:"Bonang"},
-        {value:   "Gowak", label: "Gowak"},
-        {value:  "Sriombo", label:"Sriombo"},
-        {value:  "Tasiksono", label:"Tasiksono"},
-        {value:  "Ponpes Alhamidyah", label: "Ponpes Alhamidyah"},
-        {value:  "Pondok Almasudi", label:"Pondok Almasudi"},
-        {value:  "Bangunrejo", label:"Bangunrejo"},
-        {value:  "Pondokngemplak", label:"Pondokngemplak"},
-        {value:   "Banggi", label:"Banggi"},
-        {value:   "Gedangan  Rbg", label:"Gedangan  Rbg"},
-        {value:  "Batangan", label:"Batangan"},
-        {value:  "Pondok", label:"Pondok"},
-        {value:   "Panti Asuhan", label:"Panti Asuhan"},
-        {value:   "Pondok At Taslim", label:"Pondok At Taslim"},
-        {value:  "Ponpes Al Muyassar", label:"Ponpes Al Muyassar"},
-        {value:   "Doropayung" , label: "Doropayung"},
-      ]
+      const getAlamat =(y)=>{
+        setDataM({...dataM, alamat: y})
+        console.log(y)
+      }
+      console.log(dataM)
     return (
 
         <div className='flex flex-col justify-center items-start'>
@@ -149,26 +111,20 @@ function Search() {
                         <input 
                         value={dataM.nama}
                         onChange ={(e)=>setDataM({...dataM, nama:e.target.value})}
-                        type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Nama..."/>
+                        type="text"
+                        className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Nama..."/>
                     </div>
                     <div className="rounded-sm shadow-sm">
                         <input 
                         type='text'
                         value={dataM.namakk}
                         onChange ={(e)=>setDataM({...dataM, namakk:e.target.value})}
-                        id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
+                         className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
                     </div>
+
+                    <SearchInput getAlamat={getAlamat}/>
                     {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat</label> */}
-                    <select  value={dataM.nama} onChange ={(e)=>setDataM({...dataM, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        
-                        {option.map((x , i)=>(
-                             <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-                             focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                             disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                             invalid:border-pink-500 invalid:text-pink-600
-                             focus:invalid:border-pink-500 focus:invalid:ring-pink-500 " key={i} value={x.value}> {x.label}</option>)
-                           )} 
-                    </select>  
+                   
                 </div>
             </form>
             
