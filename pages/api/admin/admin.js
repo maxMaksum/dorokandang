@@ -38,15 +38,15 @@ export default function handler(req, res) {
             success: true,
             respond1 : resAdmin[0] 
         })
-         
-      }
-      const res1 = await db.collection('users').insertOne(req.body)
+          const res1 = await db.collection('users').insertOne(req.body)
       console.log(res1)
       return res.json({
           messege: 'Post added successfully',
           success: true,
           respond1 : res1[0] 
       }); 
+      }
+     
   } 
 
   catch (error) {

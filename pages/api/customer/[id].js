@@ -9,6 +9,9 @@ const handler = async (req, res) => {
   if(req.method=="PUT"){
     return putHandler (req, res)
   }
+  if(req.method=="POST"){
+    return postHandler (req, res)
+  }
   if(req.method=="DELETE"){
     return deleteHandler (req, res)
   }
@@ -28,6 +31,18 @@ const getHandler = async (req, res) => {
       success: true,
       myData: res1
     });
+  };
+  const postHandler = async (req, res) => {
+    console.log(req.method)
+    // let { db } = await connectToDatabase();
+    // const { id } = req.query
+    // const res1 = await db.collection('customers')
+    // .find({_id: new ObjectId(id)}).toArray()
+    // return res.json({
+    //   message: 'Post find successfully',
+    //   success: true,
+    //   myData: res1
+    // });
   };
 
 const putHandler = async (req, res) => {

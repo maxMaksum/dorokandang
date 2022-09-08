@@ -29,9 +29,8 @@ function Search() {
   },[])
 
     const router = useRouter()
-   
 
-    const [data, setData] = useState({
+    const [dataM, setDataM] = useState({
         rm:"",
         nama:"",
         namakk:"",
@@ -41,8 +40,9 @@ function Search() {
  
    
     const Search = async (e) => {
+        console.log(dataM)
         e.preventDefault()
-       const data = await fetchSearch("/api/customer/customer",{...data})
+       const data = await fetchSearch("/api/customer/customer",{ params: {...dataM} })
        setShowSearch(true)
        setShowSearchOK(false)
        return data
@@ -50,10 +50,11 @@ function Search() {
      }
      
 
-    const fetchSearch = async(url)=>{
+    const fetchSearch = async(url, mdata)=>{
+        console.log(mdata)
     
         try{
-        const response = await axios.post(url, data)
+        const response = await axios.get(url, mdata)
         console.log(response)
         if(response.status){
             setStatus(true)
@@ -125,8 +126,8 @@ function Search() {
                     <div className ="w-5/6">
                         <input 
                         type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search RM..."
-                        value={data.rm}
-                        onChange ={(e)=>setData({...data, rm:e.target.value})}
+                        value={dataM.rm}
+                        onChange ={(e)=>setDataM({...dataM, rm:e.target.value})}
                         
                         
                         />
@@ -146,19 +147,19 @@ function Search() {
               
                     <div className=" rounded-sm shadow-sm">
                         <input 
-                        value={data.nama}
-                        onChange ={(e)=>setData({...data, nama:e.target.value})}
+                        value={dataM.nama}
+                        onChange ={(e)=>setDataM({...dataM, nama:e.target.value})}
                         type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Nama..."/>
                     </div>
                     <div className="rounded-sm shadow-sm">
                         <input 
                         type='text'
-                        value={data.namakk}
-                        onChange ={(e)=>setData({...data, namakk:e.target.value})}
+                        value={dataM.namakk}
+                        onChange ={(e)=>setDataM({...dataM, namakk:e.target.value})}
                         id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
                     </div>
                     {/* <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Alamat</label> */}
-                    <select  onChange ={(e)=>setData({...data, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select  value={dataM.nama} onChange ={(e)=>setDataM({...dataM, alamat:e.target.value})} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         
                         {option.map((x , i)=>(
                              <option className ="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400

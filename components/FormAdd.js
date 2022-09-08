@@ -28,21 +28,18 @@ const closeForm =(e)=>{
     const saveForm = async (e) => {
         e.preventDefault()
         console.log(dataQ)
-        const dataNew = await fetchAdd("api/customer/addData",dataQ)
+        const dataNew = await fetchAdd(`/api/customer/customer/`, dataQ)
+        
         router.push("/")
      }
    
 
-     const fetchAdd = async(url, x)=>{
+     const fetchAdd = async(url, dt)=>{
       try{
-      const response = await axios.post(url, x)
+      const response = await axios.post(url, dt)
+      console.log(response)
+      alert(response.data.messege)
 
-
-      setNewUser([...newUser, response.data.customer])
-      alert(response.data.message)
-      addUsers(newUser)
-
-  
       return response 
     }
     catch (error) {

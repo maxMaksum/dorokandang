@@ -5,8 +5,12 @@ import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
     switch (req.method) {
-        case 'POST': {
+        case 'GET': {
             return getPosts(req, res);
+           
+        }
+        case 'POST': {
+            return postPosts(req, res);
         }
         case 'PUT': {
             return updatePost(req, res);
@@ -20,7 +24,9 @@ export default async function handler(req, res) {
 }
 
  const getPosts = async (req, res) => {
-    const {rm, nama, namakk, alamat} = req.body
+
+    const {rm, nama, namakk, alamat} = req.query
+    console.log(req.query)
 
     try {
         let { db } = await connectToDatabase();
@@ -76,6 +82,37 @@ export default async function handler(req, res) {
         });
     }
 }
+
+async function postPosts(req, res) {
+    console.log(req.body)
+    try {
+        let { db } = await connectToDatabase();
+        let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
+
+      const res1 = await db.collection('users').insertOne(req.body)
+      console.log(res1)
+      return res.json({
+          messege: 'Post added successfully',
+          success: true,
+        
+      }); 
+
+        return res.json({
+            message: 'Post updated successfully',
+            success: true,})
+    } 
+    catch (error) {
+        return res.json({
+            message: new Error(error).message,
+            success: false,
+        });
+    }
+}
+
+
+
+
+
 
 async function updatePost(req, res) {
     try {
