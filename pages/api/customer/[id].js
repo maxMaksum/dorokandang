@@ -34,15 +34,16 @@ const getHandler = async (req, res) => {
   };
   const postHandler = async (req, res) => {
     console.log(req.method)
-    // let { db } = await connectToDatabase();
-    // const { id } = req.query
+    let { db } = await connectToDatabase();
+    const { id } = req.body
+    console.log(id)
     // const res1 = await db.collection('customers')
     // .find({_id: new ObjectId(id)}).toArray()
-    // return res.json({
-    //   message: 'Post find successfully',
-    //   success: true,
-    //   myData: res1
-    // });
+    return res.json({
+      message: 'Post find successfully',
+      success: true,
+      myData: res1
+    });
   };
 
 const putHandler = async (req, res) => {

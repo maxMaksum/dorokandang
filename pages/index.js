@@ -42,8 +42,9 @@ export default function Home() {
 
                 </main>
                 <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
-                        <EditForm2/>
+                      <EditForm2/>
                 </div>
+                
         </div>
         
     )}else {

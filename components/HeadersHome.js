@@ -10,24 +10,24 @@ function Headers() {
   const router = useRouter()
   
   return (
-
-      <header className="sticky top-0 z-40 bg-gray-200 flex items-just justify-between py-1.5 px-3 focus-within:shadow-lg w-full">
-          <div onClick={()=>router.push("/")} className="flex  items-center space-x-2 cursor-pointer ">
-            <Image src="/logo-puskesmas.png" width={40} height={40} />
+    <div className="bg-green-800 w-full h-20 ">
+      <header className="sticky top-0 z-40  flex items-just justify-between  py-1.5 focus-within:shadow-lg w-full h-full">
+          <div onClick={()=>router.push("/")} 
+          className="flex  items-center cursor-pointer ml-6">
+            <Image src="/logo-puskesmas.png" width={60} height={60} />
               <p className='hidden'>LASEM </p>
 
         </div>
-      
 
-        <div className="flex items-center space-x-2">
-            <div onClick={()=>signIn({ callbackUrl: 'http://localhost:3000' })}  className="flex items-center justify-center space-x-4 cursor-pointer">
-              <p className='hidden sm:inline-flex'>LOGIN</p>
-              < LoginIcon />
-            </div>
+        <div className="flex items-center mr-6">
+            <div onClick={signIn}  className="flex items-center justify-center  cursor-pointer">
+            <Image src="/google.png" width={40} height={40} />
+              <p className='mx-4 sm:inline-flex text-gray-50 bg-gray-800 p-2 bg-opacity-25'>LOGIN WITH GOOGLE</p>
             
+            </div>
         </div>
-      
-      </header>    
+      </header> 
+      </div>   
   )
 }
 

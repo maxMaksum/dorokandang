@@ -2,73 +2,58 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Store } from './contex/myContext';
 import CloseIcon from '@mui/icons-material/Close';
 import { AddBusinessRounded } from '@mui/icons-material';
-
+import{fetchAdd, fetchRead, fetchUpdate, fetchDelete }from "./CrudFunction"
 import { useRouter } from 'next/router';
 const axios = require('axios');
 
 function EditForm2() {
-
-    const { addUsers, users, removeUsers, showForm, userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
-   
+const { addUsers, users, removeUsers, showForm, userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
+  const [dataM, setDataM] = useState({})
     const router = useRouter()
 
-    console.log(userEdit)
-   const closeOK = (e)=>{
+const addForm = async (e)=>{
+      e.preventDefault()
+      const res = await fetchAdd(`/api/customer/customer`, userEdit)
+      const data = await res
+      const data2 = await fetchRead("/api/customer/customer",{ params: {userEdit} })
+      return data2
+    
+  }
+
+
+  
+  
+  //  addUsers(data)
+
+
+ 
+const updateForm = async (e)=>{
     e.preventDefault()
-    setShowForm(!showForm)
-   }
-
-
-  const closeForm = async(e, id)=>{
-        e.preventDefault()
-        const response = await fetchDelete(`/api/customer/${id}`, id)
-        const data = response
-     
-        return data
+    console.log(userEdit)
+    const res = await fetchUpdate(`/api/customer/customer`, userEdit)
+    const data = await res.success
+    console.log(data)
+    if(data){
+      updateUsers(userEdit._id, userEdit)
     }
- const fetchDelete = async(url,x)=>{
-        console.log(x)
-     
-      try{
-        const response = await axios.delete(url, x)
-        const data = response.data
-        alert(data.message)
-        await removeUsers(x)
-        router.push("/")
-        return data
-      }
-      catch (error) {
-        console.error(error);
-      }
-      }
+    router.push("/")
+    return data
+  
+}
 
-
-    const saveForm = async (e)=>{
-        e.preventDefault()
-        const res = await fetchUpdate(`/api/customer/${userEdit._id}`, userEdit)
-        const data = await res.success
-        console.log(data)
-        if(data){
-          updateUsers(userEdit._id, userEdit)
-        }
-        router.push("/")
-        return data
+const deleteForm = async(e, id)=>{
+  e.preventDefault()
+  const response = await fetchDelete(`/api/customer/${id}`, id)
+  const data = response
+  return data
+}
+  
+const closeOK = (e)=>{
+  e.preventDefault()
+  setShowForm(!showForm)
+ }    
       
-    }
-
-    const fetchUpdate = async(url, y)=>{
-     
-        try{
-        const response = await axios.put(url, y)
-        const data = response.data
-        alert(data.message)
-        // addUsers(data.data)
-        return data
-      }
-      catch (error) {
-        console.error(error);
-      }
-      }
+   
 
 
   return (
@@ -113,8 +98,9 @@ function EditForm2() {
             </div>
           
              <div className="flex items-center justify-center space-x-4">
-               <button onClick={(e)=>saveForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SAVE</button>
-               <button onClick={(e)=>closeForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
+               <button onClick={(e)=>updateForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+               <button onClick={(e)=>addForm(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+               <button onClick={(e)=>deleteForm(e,userEdit._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
                <button onClick={(e)=>closeOK(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>
 
             </div>

@@ -27,6 +27,7 @@ export default async function handler(req, res) {
 
     const {rm, nama, namakk, alamat} = req.query
     console.log(req.query)
+  
 
     try {
         let { db } = await connectToDatabase();
@@ -83,48 +84,38 @@ export default async function handler(req, res) {
     }
 }
 
+const updatePost = async (req, res) => {
+    let { db } = await connectToDatabase();
+    let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
+   
+    var myquery = {_id: new ObjectId(_id)};
+    var newvalues = { $set:{ rm:rm, nama:nama,namakk:namakk,alamat:alamat,rt:rt,rw:rw, alamat:alamat} };
+     await db.collection("customers").updateOne(myquery, newvalues, function(err, res) {
+     if (err) throw err; 
+  });
+
+    return res.json({
+      message: 'Post added successfully',
+      success: true,
+    });
+
+};
+
+
 async function postPosts(req, res) {
-    console.log(req.body)
     try {
         let { db } = await connectToDatabase();
-        let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
+        let {rm, nama, namakk, alamat, rt, rw} = req.body
 
-      const res1 = await db.collection('users').insertOne(req.body)
+      const res1 = await db.collection('customers').insertOne(
+        {rm, nama, namakk, alamat, rt, rw}
+      )
       console.log(res1)
       return res.json({
           messege: 'Post added successfully',
           success: true,
         
       }); 
-
-        return res.json({
-            message: 'Post updated successfully',
-            success: true,})
-    } 
-    catch (error) {
-        return res.json({
-            message: new Error(error).message,
-            success: false,
-        });
-    }
-}
-
-
-
-
-
-
-async function updatePost(req, res) {
-    try {
-        let { db } = await connectToDatabase();
-        let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
-
-        const myData = await db.collection('customer').updateOne(
-            {_id: new ObjectId(_id)}, { $set:{"rm" : rm , "nama" : nama }})
-
-        return res.json({
-            message: 'Post updated successfully',
-            success: true,})
     } 
     catch (error) {
         return res.json({

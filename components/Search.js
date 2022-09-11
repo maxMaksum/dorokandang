@@ -43,20 +43,18 @@ function Search() {
     const Search = async (e) => {
         console.log(dataM)
         e.preventDefault()
-       const data = await fetchSearch("/api/customer/customer",{ params: {...dataM} })
-       setShowSearch(true)
-       setShowSearchOK(false)
-       return data
+         const data = await fetchSearch("/api/customer/customer",{ params: {...dataM} })
+         setShowSearch(true)
+         setShowSearchOK(false)
+         return data
     
      }
      
 
     const fetchSearch = async(url, mdata)=>{
-        console.log(mdata)
-    
         try{
         const response = await axios.get(url, mdata)
-        console.log(response)
+       
         if(response.status){
             setStatus(true)
         }
@@ -74,10 +72,10 @@ function Search() {
         setDataM({...dataM, alamat: y})
         console.log(y)
       }
-      console.log(dataM)
+     
     return (
 
-        <div className='flex flex-col justify-center items-start'>
+        <div className='flex flex-col justify-center items-start w-full'>
             <form onSubmit= {(e)=>Search(e)} className='flex flex-col items-center mb-2 py-2 relative w-full relative'>
                 <div className='flex items-center justify-center space-x-2 w-full'>
                     <div className='flex items-center justify-center rounded animate-bounce '>

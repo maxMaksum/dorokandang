@@ -2,12 +2,18 @@ import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+import { useContext } from 'react'
+import EditForm2 from '../components/EditForm2'
 import FormAdd from '../components/FormAdd'
 import Headers from '../components/Headers'
+import Search from '../components/Search'
+import TableNew from '../components/TableNew'
+import { Store } from '../components/contex/myContext'
 
 
 function addRm() {
   const {data: session, status} = useSession({ required: true })
+  const { showForm, showSearchOK } = useContext(Store);
   const router = useRouter()
 
   if (status=="loading" ) {
@@ -23,10 +29,15 @@ function addRm() {
                     <link rel="icon" href="/favicon.ico"/>
           </Head>
       <Headers myPath={"/addRm"}/>
-      <div className='w-100 flex items-center justify-center mt-8'>
+      <div className=' bg-green-500 flex flex-col items-center justify-center w-full'>
+        <Search/>
+        <TableNew />
         <FormAdd/>
       </div>
       <div className='flex flex-col items-center justify-center w-100'>
+      <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
+          <EditForm2/>
+      </div>
         {/* <TableNew/> */}
       
     </div> 
