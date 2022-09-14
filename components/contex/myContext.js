@@ -16,10 +16,10 @@ const readUsers = () => {
    return users
 };
 
-const updateUsers = (id, editUser) => {
+const updateUsers = (id, x) => {
   const editUsers = users.filter(user => {
-    return user._id !== id})
-  setUsers([...editUsers, editUser])
+    return user._id !== x._id})
+  setUsers([...editUsers, x])
 
 };
 

@@ -1,18 +1,18 @@
 const axios = require('axios');
 
-export const fetchAdd = async(url, x)=>{
 
+export const fetchAdd = async(url, x)=>{
   try{
+    // console.log(url, x)
     const response = await axios.post(url, x)
     return response 
   }
   catch (error) {
     console.error(error);
   }
-  }
+}
 
 export  const fetchRead = async(url, mdata)=>{
-  console.log(mdata)
     try{
     const response = await axios.get(url, mdata)
     const {respond1} = await response.data
@@ -23,29 +23,15 @@ export  const fetchRead = async(url, mdata)=>{
   }
   }
 
-export const fetchUpdate = async(url, x)=>{
+  export const fetchDelete = async(url)=>{
+    console.log("delete", url)
     try{
-      const response = await axios.put(url, x)
+      // console.log(url, x)
+      const response = await axios.delete(url)
       return response 
     }
     catch (error) {
       console.error(error);
     }
-    }
-
-
-export const fetchDelete = async(url)=>{
- 
-        try{
-        const response = await axios.delete(url)
-      
-        return response
-      
-      }
-      catch (error) {
-        console.error(error);
-      }
-      }
-
- 
+  }
 

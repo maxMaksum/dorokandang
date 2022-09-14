@@ -85,14 +85,24 @@ export default async function handler(req, res) {
 }
 
 const updatePost = async (req, res) => {
+    
     let { db } = await connectToDatabase();
     let {_id, rm, nama, namakk, alamat, rt, rw} = req.body
+    console.log(nama)
    
     var myquery = {_id: new ObjectId(_id)};
-    var newvalues = { $set:{ rm:rm, nama:nama,namakk:namakk,alamat:alamat,rt:rt,rw:rw, alamat:alamat} };
-     await db.collection("customers").updateOne(myquery, newvalues, function(err, res) {
-     if (err) throw err; 
-  });
+    var newvalues = { rm,nama, namakk, alamat, rt,rw};
+    console.log(_id)
+    const myNewVl= await db.collection("customers").updateOne(
+    {_id: new ObjectId(_id)},
+    {$set:{nama:nama}},
+    {upsert:true}
+
+    // {$set:{newvalues}},{upsert:true});
+ )
+    // const myNewVl= await db.collection.customers.findAndModify(myquery, newvalues);
+
+  console.log(myNewVl)
 
     return res.json({
       message: 'Post added successfully',

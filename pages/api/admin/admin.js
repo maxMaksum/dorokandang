@@ -71,8 +71,7 @@ const updateUsers = async (req, res)=>{
             message: 'Admin updated successfully',
             success: true
         })
-    
-         
+     
       }
       catch (error) {
         return res.json({
@@ -103,25 +102,8 @@ const getUsers = async (req, res)=>{
             success: false,
         });
     }};
-    const deleteUser = async (req, res) => {
-        //   try {
-        //       let { db } = await connectToDatabase();
-        //       await db.collection('users').deleteOne({
-        //           _id: new ObjectId(_id),
-        //       });
-        //       return res.json({
-        //           message: 'Post deleted successfully',
-        //           success: true,
-        //       });
-        //   }
-        //  catch (error) {
-        //     return res.json({
-        //         message: new Error(error).message,
-        //         success: false,
-        //     });
-        //   }
-        res.status(200).json({ name: 'John Doe' })
-      };
+    
+       
       
      
 
