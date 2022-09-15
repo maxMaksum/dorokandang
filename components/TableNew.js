@@ -36,12 +36,9 @@ const editData=(e, x)=>{
      setUserEdit(myUser[0])
   }
 
-  const saveData=async (e)=>{
+const saveData=async (e)=>{
     e.preventDefault()
-   
-    // const res = await fetchUpdate(`/api/customer/${adminEdit._id}`, adminEdit)
     const data = await res
-    
     const res = await fetchUpdate(`/api/customer3/${adminEdit._id}`, adminEdit)
     let myDataq = JSON.parse(res.data.myData)
     const myUserq = users.map(x=>{
@@ -57,7 +54,7 @@ const editData=(e, x)=>{
         }
        return x 
     })
-     console.log(myUserq)
+  
     alert(res.data.message)
     setUsers(myUserq)
     setAdminId(false)
@@ -107,26 +104,26 @@ const editData=(e, x)=>{
             console.log(y)
           }
   return (
-    <div className='overflow-x-auto relative h-screen bg-red-500'>
+    <div className='overflow-x-auto relative h-screen bg-gray-50 '>
 
-        <div className ="text-sm text-left text-gray-500 dark:text-gray-400 bg-yellow-500 ">
+        <div className ="text-sm text-left text-gray-900 dark:text-gray-400 mt-6 ">
             <div className=
-            "text-xs text-gray-700 uppercase bg-blue-500 dark:bg-gray-700 dark:text-gray-400 flex justify-between">
-                <div></div>
-                    <p className="py-3 px-2">RM</p>
-                    <p className="py-3 px-2">NAMA</p>
-                    <p className="py-3 px-2">NAMA KK</p>
-                    <p className="py-3 px-2">ALAMAT</p>
-                    <p className= 'py-3 hidden sm-inline-flex'>RT</p>
-                    <p className= 'py-3 hidden sm-inline-flex'>RT</p>
-                    <p className= 'py-3 px-2'>ACT</p>
+            "bg-green-500 text-sm sm:text-md grid grid-cols-12 gap-y-6 gap-x-2 place-content-center bg-green-700 my-2 h-10 mx-4 text-gray-50 px-2">
+
+                    <p className="grid col-span-1">RM</p>
+                    <p className="grid col-span-2">NAMA</p>
+                    <p className="grid col-span-2">NAMA KK</p>
+                    <p className="grid col-span-2">ALAMAT</p>
+                    <p className= 'grid col-span-1'>RT</p>
+                    <p className= 'grid col-span-1'>RW</p>
+                    <p className= 'grid col-span-2'>ACTIONS</p>
             </div>
            
                 { users&&users.map((customer, index )=> (
                     <div className=""> 
                         {adminId != customer._id?(
                             <div 
-                                className=" bg-gray-50 text-sm sm:text-xl grid grid-cols-12 gap-y-6 gap-x-2 place-content-center  "
+                                className="text-sm sm:text-md grid grid-cols-12 gap-y-6 gap-x-2 place-content-center my-2 h-10 mx-4 text-gray-900 px-2 bg-green-100 "
                                 key={customer._id}>
                                     <p className="grid col-span-1"> {customer.rm}</p>
                                     <p className="grid  col-span-2 "> {customer.nama}</p>
@@ -135,18 +132,18 @@ const editData=(e, x)=>{
                                     <p className="grid col-span-1"> {customer.rt}</p>
                                     <p className="grid col-span-1 "> {customer.rw}</p>
 
-                                <div className='grid col-span-1'>
-                                    <div className='flex space-x-4'>
-                                        <div onClick={(e)=>deleteData(e, customer._id)} className=' text-green cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                                <div className='grid col-span-2'>
+                                    <div className='flex justify between space-x-4'>
+                                        <div onClick={(e)=>deleteData(e, customer._id)} className=' text-green cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
                                             <CloseIcon />
                                         </div>
-                                        <div  onClick={(e)=>editData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                                        <div  onClick={(e)=>editData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
                                             <BorderColorIcon />
                                         </div>
-                                        <div  onClick={(e)=>addData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                                        <div  onClick={(e)=>addData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
                                                 <DataSaverOnIcon/>
                                         </div>
-                                        <div  onClick={()=>router.push(`/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center'>
+                                        <div  onClick={()=>router.push(`/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
                                             <TouchAppIcon />
                                         </div> 
                                     </div>
@@ -155,47 +152,47 @@ const editData=(e, x)=>{
                             </div>):(
                         
                         <div 
-                            className=" bg-gray-50 text-sm sm:text-xl grid grid-cols-12 gap-x-4  place-content-center "
+                            className="text-sm sm:text-md grid grid-cols-12 gap-y-6 gap-x-2 place-content-center my-2 h-10 mx-4 text-gray-900 px-2 "
 
                             key={customer._id}>
-                                <input className="grid col-span-1 bg-gray-100 "
+                                <input className="grid col-span-1 bg-green-100 "
                                  type="text"
                                  onChange={(e)=>setAmdinEdit({...adminEdit, rm:e.target.value})}
                                  value = {adminEdit.rm} 
                                  />
-                                <input className="grid  col-span-2 bg-gray-100" 
+                                <input className="grid  col-span-2 bg-green-100" 
                                  type="text"
                                  onChange={(e)=>setAmdinEdit({...adminEdit, nama:e.target.value})}
                                  value = {adminEdit.nama}
                                 
                                 />
-                                <input className="grid  col-span-2 bg-gray-100"
+                                <input 
+                                 className="grid  col-span-2 bg-green-100 py-2"
                                  type="text"
                                  onChange={(e)=>setAmdinEdit({...adminEdit, namakk:e.target.value})}
                                  value = {adminEdit.namakk}/>
-                                <div  className="grid  col-span-2 bg-gray-100 relative ">
-                                <div className={'absolute top-0 left-0 z-20 overflow-y-auto'}>
-                                <SearchInput 
-                                getAlamat={getAlamat}
-                                alamatQ = {adminEdit.alamat}/>
+                                <div  className="grid  col-span-2 bg-green-100 py-2 relative ">
+                                <div  className="absolute top-0 left-0 z-20  bg-green-100 text-sm">
+                                    <SearchInput 
+                                    getAlamat={getAlamat}
+                                    alamatQ = {adminEdit.alamat}/>
                                 </div>
-
                                 </div>
                                
-                                <input className="grid col-span-1" 
+                                <input className="grid col-span-1 grid  col-span-1 bg-green-100 py-2" 
                                 type="text"
                                 onChange={(e)=>setAmdinEdit({...adminEdit, rt:e.target.value})}
                                 value = {adminEdit.rt} />
-                                <input className="grid col-span-1 " 
+                                <input className="grid col-span-1 bg-green-100 py-2 " 
                                  type="text"
                                  onChange={(e)=>setAmdinEdit({...adminEdit, rw:e.target.value})}
                                 value = {adminEdit.rw} />
-                            <div className='grid col-span-1'>
-                                    <div className='flex space-x-4 '>
-                                        <div onClick={(e)=>closeButton(e)} className=' text-green cursor-pointer rounded-full bg-gray-100 '>
+                            <div className='grid col-span-2 bg-green-100 py-2 px-4'>
+                                    <div className='flex justify-between  '>
+                                        <div onClick={(e)=>closeButton(e)} className='cursor-pointer '>
                                             Close
                                         </div>
-                                        <div  onClick={(e)=>saveData(e)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-100'>
+                                        <div  onClick={(e)=>saveData(e)} className=' cursor-pointer'>
                                             Save
                                      </div>
                                 </div>        

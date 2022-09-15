@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Store } from './contex/myContext';
-import CloseIcon from '@mui/icons-material/Close';
-import { AddBusinessRounded, SavedSearch } from '@mui/icons-material';
 import{fetchAdd, fetchUpdate, fetchDelete, fetchSearch }from "./CrudFunction"
 import { useRouter } from 'next/router';
-const axios = require('axios');
 import SearchInput from "./SearchInput";
 
 function EditForm2() {
@@ -14,10 +11,7 @@ function EditForm2() {
   const [dataM, setDataM] = useState({_id:"", rm:"", nama:"",namakk:"", alamat:"",rt:"",rw:""})
   const [showInput, setShowInput] =useState(true)
 
-  const router = useRouter()
-
-
-  const addForm = async (e)=>{
+    const addForm = async (e)=>{
         e.preventDefault()
         setShowInput(false)
         setShowAdd(!showAdd)
@@ -25,30 +19,28 @@ function EditForm2() {
       
     }
 
- const editForm = async (e)=>{
+    const editForm = async (e)=>{
         e.preventDefault()
         setShowInput(false)
         setShowEdit(false)
       
     }
- const saveForm = async(e)=>{
-  e.preventDefault()
-  setShowAdd(!showAdd)
-  const data2 = await fetchAdd("/api/customer/customers2", dataM)
-  const data3 = JSON.parse(data2.data.newUser)
-  setUsers([...users, {rm:data3.rm, 
-    nama:data3.nama, 
-    alamat:data3.alamat, 
-    rm:data3.rm,
-    rt:data3.rt
-}])
-  alert(data2.data.message)
-  
-  setShowForm(!showForm)
-  // return data2
- }
 
-const updateForm = async (e)=>{
+    const saveForm = async(e)=>{
+        e.preventDefault()
+        setShowAdd(!showAdd)
+        const data2 = await fetchAdd("/api/customer/customers2", dataM)
+        const data3 = JSON.parse(data2.data.newUser)
+        setUsers([...users, {rm:data3.rm, 
+            nama:data3.nama, 
+            alamat:data3.alamat, 
+            rm:data3.rm,
+            rt:data3.rt}])
+        alert(data2.data.message)
+  
+        setShowForm(!showForm)}
+
+    const updateForm = async (e)=>{
     e.preventDefault()
     setShowEdit(true)
     setShowInput(false)
@@ -72,44 +64,21 @@ const updateForm = async (e)=>{
     setUsers(myUserq)
     setShowForm(!showForm)
   
-}
-
-const deleteForm = async(e, id)=>{
-  e.preventDefault()
-  const res = await fetchDelete(`/api/customer/${id}`)
-  alert(res.data.message)
-  const newUser = users.filter(x=>{
-   return x._id !== id
-  })
-  setUsers(newUser)
-  setShowForm(!showForm)
-}
-
-const saveSearch = async (e) =>{
-    e.preventDefault()
-    const data = await fetchSearch("/api/customer/customers2", { params: {...dataM} })
-
-}
-const getAlamat =(y)=>{
-    setDataM({...dataM, alamat: y})
-    console.log(y)
-  }
-const searcForm= async (e) => {
-    e.preventDefault()
-    setDataM({})
-     const data = await fetchSearch("/api/customer/customer2",{ params: {...dataM} })
-     setShowSearch(true)
-     setShowSearchOK(false)
-    
-     if(response.status){
-        setStatus(true)
     }
-    const {respond1} = await response.data
-    addUsers(respond1)
-    setShowSearch(!showSearch)
-    return respond1
 
-}
+    const deleteForm = async(e, id)=>{
+    e.preventDefault()
+    const res = await fetchDelete(`/api/customer/${id}`)
+        alert(res.data.message)
+        const newUser = users.filter(x=>{
+        return x._id !== id})
+    setUsers(newUser)
+    setShowForm(!showForm)}
+
+    const getAlamat =(y)=>{
+        setDataM({...dataM, alamat: y})
+        console.log(y)
+    }
     const closeOK = (e)=>{
         e.preventDefault()
         setShowForm(!showForm)
@@ -173,26 +142,27 @@ const searcForm= async (e) => {
                     alamatQ = {dataM.alamat}
                     />
                
-               
             </div>
           
              <div className="flex items-center justify-center space-x-4">
-
                 <button onClick={(e)=>editForm(e)}type="submit"
                  className = {showEdit ? "text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800":"hidden"
                 }>Edit</button>
 
                <button onClick={(e)=>updateForm(e, dataM)}type="submit" className ={showEdit ? "hidden":"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"}>Update</button>
+
                <button 
                onClick={(e)=>addForm(e)}
                type="submit"
                className ={showAdd?"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800":"hidden"} 
                
                >Add</button>
-               <button onClick={(e)=>saveForm(e)}type="submit" className ={!showAdd?"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800":"hidden"}>Save</button>
-               <button onClick={(e)=>deleteForm(e, dataM._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
-            <button onClick={(e)=>closeOK(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>
 
+                <button onClick={(e)=>saveForm(e)}type="submit" className ={!showAdd?"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800":"hidden"}>Save</button>
+
+                <button onClick={(e)=>deleteForm(e, dataM._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
+
+                <button onClick={(e)=>closeOK(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>
             </div>
           
         </form>
