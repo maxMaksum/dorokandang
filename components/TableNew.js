@@ -5,14 +5,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import TouchAppIcon from '@mui/icons-material/TouchApp';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DataSaverOnIcon from '@mui/icons-material/DataSaverOn';
-import{fetchAdd, fetchRead, fetchUpdate, fetchDelete }from "./CrudFunction"
-
+import{fetchUpdate}from "./CrudFunction"
+import SearchInput from "./SearchInput";
 const axios = require('axios').default;
 
 function TableNew() {
 
-  const { addUsers, updateUsers, users, removeUsers, showForm, setShowForm, userEdit, setUserEdit } = useContext(Store);
+  const { users, setUsers, removeUsers, showForm, setShowForm, userEdit, setUserEdit } = useContext(Store);
   const [showEdit, setShowEdit] = useState(false)
+  const [showAlamat, setShowAlamat] = useState(false)
   const [adminId, setAdminId] = useState(null)
   const [adminEdit, setAmdinEdit] = useState({})
   
@@ -38,12 +39,27 @@ const editData=(e, x)=>{
   const saveData=async (e)=>{
     e.preventDefault()
    
-    const res = await fetchUpdate(`/api/customer/${adminEdit._id}`, adminEdit)
+    // const res = await fetchUpdate(`/api/customer/${adminEdit._id}`, adminEdit)
     const data = await res
     
-    if(data){
-      updateUsers(adminEdit._id, adminEdit)
-    }
+    const res = await fetchUpdate(`/api/customer3/${adminEdit._id}`, adminEdit)
+    let myDataq = JSON.parse(res.data.myData)
+    const myUserq = users.map(x=>{
+        if(x._id == myDataq._id){
+            return{
+                ...x, 
+                rm:myDataq.rm,
+                nama:myDataq.nama,
+                alamat:myDataq.alamat,
+                rt:myDataq.rt, 
+                rw:myDataq.rw
+            }
+        }
+       return x 
+    })
+     console.log(myUserq)
+    alert(res.data.message)
+    setUsers(myUserq)
     setAdminId(false)
     return data
 
@@ -86,9 +102,12 @@ const editData=(e, x)=>{
           }
          }
            
-
+         const getAlamat =(y)=>{
+            setAmdinEdit({...adminEdit, alamat: y})
+            console.log(y)
+          }
   return (
-    <div className='overflow-x-auto relative '>
+    <div className='overflow-x-auto relative h-screen bg-red-500'>
 
         <div className ="text-sm text-left text-gray-500 dark:text-gray-400 bg-yellow-500 ">
             <div className=
@@ -154,10 +173,15 @@ const editData=(e, x)=>{
                                  type="text"
                                  onChange={(e)=>setAmdinEdit({...adminEdit, namakk:e.target.value})}
                                  value = {adminEdit.namakk}/>
-                                <input className="grid col-span-2" 
-                                 type="text"
-                                 onChange={(e)=>setAmdinEdit({...adminEdit, alamat:e.target.value})}
-                                value = {adminEdit.alamat} />
+                                <div  className="grid  col-span-2 bg-gray-100 relative ">
+                                <div className={'absolute top-0 left-0 z-20 overflow-y-auto'}>
+                                <SearchInput 
+                                getAlamat={getAlamat}
+                                alamatQ = {adminEdit.alamat}/>
+                                </div>
+
+                                </div>
+                               
                                 <input className="grid col-span-1" 
                                 type="text"
                                 onChange={(e)=>setAmdinEdit({...adminEdit, rt:e.target.value})}

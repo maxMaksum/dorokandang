@@ -7,6 +7,7 @@ const axios = require('axios').default;
 
 function FormAdd({data2}) {
 
+  const {rm, nama, namakk, alamat, rt, rw} = data2
   const router = useRouter()
   const { addUsers, users } = useContext(Store);
   const [newUser, setNewUser] = useState([])
@@ -20,18 +21,11 @@ function FormAdd({data2}) {
 
 })
 
+console.log(data2)
 useEffect(()=>{
-  setDataQ(data2)
-},[data2])
-//   const [dataQ, setDataQ] = useState({
-//     rm:"",
-//     nama:"",
-//     namakk:"",
-//     rt:"",
-//     rw:"", 
-//     alamat:""
-
-// })
+  setDataQ({...dataQ, rm, nama, namakk, alamat, rt, rw})
+},[])
+        
 
 const closeForm =(e)=>{
   e.preventDefault()

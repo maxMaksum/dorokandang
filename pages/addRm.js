@@ -30,17 +30,10 @@ function addRm() {
           </Head>
       <Headers myPath={"/addRm"}/>
       <div className=' bg-green-500 flex flex-col items-center justify-center w-full'>
-        <Search/>
-        <TableNew />
+       
         <FormAdd/>
       </div>
-      <div className='flex flex-col items-center justify-center w-100'>
-      <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
-          <EditForm2/>
-      </div>
-        {/* <TableNew/> */}
-      
-    </div> 
+     
     </div>
     
   )}else {

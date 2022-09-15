@@ -1,9 +1,11 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import alamat from "../alamat"
 
 function SearchInput({getAlamat, alamatQ}) {
-     const [query, setQuery] = useState(alamatQ)
+  console.log(alamatQ)
+     const [query, setQuery] = useState("")
      const [desa, setDesa] = useState("")
      const getDesa = (e, user)=>{
         e.preventDefault()
@@ -11,7 +13,7 @@ function SearchInput({getAlamat, alamatQ}) {
         getAlamat(user)
       
      }
-
+useEffect(()=>setQuery(alamatQ),[alamatQ])
   return (
     
    <div className="app">
@@ -21,11 +23,11 @@ function SearchInput({getAlamat, alamatQ}) {
         value={query }
         onChange={(e) => setQuery(e.target.value.toLowerCase())}
       />
-      <ul className="list">
+      <ul className="list overflow-auto">
         {alamat.filter((asd) =>
           asd.toLowerCase().includes(query)
         ).map((user, index) => (
-         <li className="mb-2 " key={index}>
+         <li className="mb-2 flex-none bg-gray-200 " key={index}>
             {query == ""?"":
             <butto className="cursor-pointer"  onClick ={(e)=>getDesa(e, user)}>{user}</butto>}
           </li>

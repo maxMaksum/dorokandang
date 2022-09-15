@@ -53,6 +53,7 @@ const {id} = context.params
 const myId = id[0]
   const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/customer3/${myId}`)
   const data2 = await response.data.respond1
+  console.log(data2)
   // console.log("", response)
   // const data3 = JSON.stringify(data2)
   return {props:{session, data2}}

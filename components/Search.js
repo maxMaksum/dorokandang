@@ -46,38 +46,17 @@ function Search() {
         e.preventDefault()
          const response = await fetchSearch("/api/customer/customer2", { params: {...dataM} })
          
-          setShowSearch(true)
-         setShowSearchOK(false)
          setShowSearch(true)
-         setShowSearchOK(false)
+         setShowSearchOK(!showSearchOK)
         
          if(response.status){
             setStatus(true)
         }
         const {respond1} = await response.data
         addUsers(respond1)
-        setShowSearch(!showSearch)
         return respond1
     
      }
-     
-
-    // const fetchSearch = async(url, mdata)=>{
-    //     try{
-    //     const response = await axios.get(url, mdata)
-       
-    //     if(response.status){
-    //         setStatus(true)
-    //     }
-    //     const {respond1} = await response.data
-    //     addUsers(respond1)
-    //     setShowSearch(!showSearch)
-    //     return respond1
-    //   }
-    //   catch (error) {
-    //     console.error(error);
-    //   }
-    //   }
 
       const getAlamat =(y)=>{
         setDataM({...dataM, alamat: y})

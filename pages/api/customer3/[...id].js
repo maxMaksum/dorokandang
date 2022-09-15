@@ -55,11 +55,14 @@ const getHandler = async (req, res) => {
 };
 
 const putHandler = async (req, res) => {
+
+  const {id} = req.query
+  let myId = id[0]
+  console.log(myId)
   
   await db.connect();
-  const user = await Customers.findById({_id: mongoose.Types.ObjectId(req.query.id)});
-  
-  console.log(user)
+  const user = await Customers.findById({_id: mongoose.Types.ObjectId(myId)});
+
   if (user) {
     user.rm = req.body.rm;
     user.nama = req.body.nama;
@@ -70,6 +73,7 @@ const putHandler = async (req, res) => {
    
    const newUser = await user.save();
    let myUser = JSON.stringify(newUser)
+   console.log(myUser)
     await db.disconnect();
     res.send(
       { message: 'Product updated successfully', myData:myUser}
