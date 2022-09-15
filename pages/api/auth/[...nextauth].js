@@ -1,15 +1,17 @@
 import NextAuth from "next-auth/next"
 import  GoogleProvider from "next-auth/providers/google"
-import { connectToDatabase } from "../../../lib/monggodb"
+import db from '../../../lib/db';
+import User from "../../../lib/User";
 
 export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
-    }),
-
+      clientSecret: process.env.GOOGLE_SECRET,
+     },
+     ),
   ],
+
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -17,7 +19,7 @@ export default NextAuth({
   },
 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn() {
         return true  
     },
     async jwt({ token, user }) {
@@ -26,14 +28,12 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-
-      let { db } = await connectToDatabase();
-      const existingUser = await db.collection('users')
-      .find({ email: { $regex: token.email, $options: 'i' }},).toArray()
-
+      await db.connect()
+      const existingUser = await User.findOne({ email: token.email });
+      
         if (token?._id && existingUser ) {
           session.user._id = token._id;
-          session.user.admin = existingUser[0].role
+          session.user.admin = existingUser.isAdmin
         } else {
           session.user._id = token._id;
           session.user.admin = false
@@ -47,9 +47,7 @@ export default NextAuth({
    
   },
 
-  // secret: process.env.SECRET,
-  secret: process.env.JWT_SECRET,
-
+  secret: process.env.SECRET,
 
   }
 )

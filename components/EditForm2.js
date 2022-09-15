@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Store } from './contex/myContext';
 import CloseIcon from '@mui/icons-material/Close';
-import { AddBusinessRounded } from '@mui/icons-material';
-import{fetchAdd, fetchRead, fetchUpdate, fetchDelete }from "./CrudFunction"
+import { AddBusinessRounded, SavedSearch } from '@mui/icons-material';
+import{fetchAdd, fetchUpdate, fetchDelete, fetchSearch }from "./CrudFunction"
 import { useRouter } from 'next/router';
 const axios = require('axios');
 
 function EditForm2() {
-  const { addUsers, users, removeUsers, showForm, userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
+  const { addUsers, users,  setUsers, removeUsers, showForm, userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
 
   const [dataM, setDataM] = useState({rm:"", nama:"",namakk:"", alamat:"",rt:"",rw:""})
   const router = useRouter()
@@ -24,20 +24,39 @@ function EditForm2() {
 
  const saveForm = async(e)=>{
   e.preventDefault()
-  console.log(dataM)
   const data2 = await fetchAdd("/api/customer/customers2", dataM)
+  const data3 = JSON.parse(data2.data.newUser)
+  setUsers([...users, {rm:data3.rm, 
+    nama:data3.nama, 
+    alamat:data3.alamat, 
+    rm:data3.rm,
+    rt:data3.rt
+}])
   alert(data2.data.message)
+  
   setShowForm(!showForm)
   // return data2
  }
 
 const updateForm = async (e)=>{
     e.preventDefault()
-    // console.log("****", dataM)
     const res = await fetchUpdate(`/api/customer/${dataM._id}`, dataM)
+    let myDataq = JSON.parse(res.data.myData)
+    const myUserq = users.map(x=>{
+        if(x._id==myDataq._id){
+            return{...x, 
+                rm:myDataq.rm,
+                nama:myDataq.nama,
+                alamat:myDataq.alamat,
+                rt:myDataq.rt, 
+                rw:myDataq.rw
+            }
+        } 
+        return x
+    })
 
     alert(res.data.message)
- 
+    setUsers([...users, myUserq])
     setShowForm(!showForm)
   
 }
@@ -45,20 +64,44 @@ const updateForm = async (e)=>{
 const deleteForm = async(e, id)=>{
   e.preventDefault()
   const res = await fetchDelete(`/api/customer/${id}`)
-  console.log(res)
-
   alert(res.data.message)
- 
+  const newUser = users.filter(x=>{
+   return x._id !== id
+  })
+  setUsers(newUser)
   setShowForm(!showForm)
 }
+
+const saveSearch = async (e) =>{
+    e.preventDefault()
+    const data = await fetchSearch("/api/customer/customers2", { params: {...dataM} })
+
+}
   
-const closeOK = (e)=>{
-  e.preventDefault()
-  setShowForm(!showForm)
- }    
- useEffect(()=>{
-  setDataM(userEdit)
- },[userEdit])
+const searcForm= async (e) => {
+    e.preventDefault()
+    setDataM({})
+     const data = await fetchSearch("/api/customer/customer2",{ params: {...dataM} })
+     setShowSearch(true)
+     setShowSearchOK(false)
+    
+     if(response.status){
+        setStatus(true)
+    }
+    const {respond1} = await response.data
+    addUsers(respond1)
+    setShowSearch(!showSearch)
+    return respond1
+
+}
+    const closeOK = (e)=>{
+        e.preventDefault()
+        setShowForm(!showForm)
+    }   
+     
+    useEffect(()=>{
+        setDataM(userEdit)
+    },[userEdit])
       
   return (
     <div className='w-full '>
@@ -106,8 +149,9 @@ const closeOK = (e)=>{
                <button onClick={(e)=>addForm(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
                <button onClick={(e)=>saveForm(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
                <button onClick={(e)=>deleteForm(e, dataM._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">DELETE</button>
-               <button onClick={(e)=>Form(e, dataM._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SEARCH</button>
-               <button onClick={(e)=>closeOK(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>
+               <button onClick={(e)=>searcForm(e, dataM._id)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SEARCH</button>
+               <button onClick={(e)=>saveSearch(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">SEARCH</button>    
+            <button onClick={(e)=>closeOK(e)}type="submit" className ="text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">CLOSE</button>
 
             </div>
           

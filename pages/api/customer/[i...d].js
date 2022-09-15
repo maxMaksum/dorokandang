@@ -13,7 +13,7 @@ const handler = async (req, res) => {
 
   // const { user } = session;
   if (req.method === 'GET') {
-    return getHandler(req, res, user);
+    return getHandler(req, res);
   } else if (req.method === 'PUT') {
     return putHandler(req, res);
   } else if (req.method === 'DELETE') {
@@ -23,15 +23,53 @@ const handler = async (req, res) => {
   }
 };
 const getHandler = async (req, res) => {
-  await db.connect();
-  const product = await Customers.findById(req.query.id);
-  await db.disconnect();
-  res.send(product);
-};
-const putHandler = async (req, res) => {
 
+  const {rm, nama, namakk, alamat} = req.query
+
+  try {
+   await db.connect()
+   if(rm){
+   const res2 = await Customers.find(
+       { rm: { $regex:`^${rm}.*`, $options: 'i' }}
+       
+   ) 
+
+
+  
+   return res.json({
+     message: 'Post added successfully',
+     success: true,
+     respond1 : res2
+ })
+
+}else{
+       const res1 = await Customers.find( {
+       $and:[  { nama: { $regex: `^${nama}.*`, $options: 'i' }},
+               { namakk: { $regex: namakk, $options: 'i' }},
+               { alamat: { $regex: alamat, $options: 'i' }}
+           ]}
+       )   
+           return res.json({
+           message: 'Post added successfully',
+           success: true,
+           respond1 : res1
+       })
+   }
+ }
+   catch (error) {
+     return res.json({
+         message: new Error(error).message,
+         success: false,
+     });
+ }
+};
+
+const putHandler = async (req, res) => {
+  
   await db.connect();
   const user = await Customers.findById({_id: mongoose.Types.ObjectId(req.query.id)});
+  
+  console.log(user)
   if (user) {
     user.rm = req.body.rm;
     user.nama = req.body.nama;
@@ -41,9 +79,12 @@ const putHandler = async (req, res) => {
     user.rw = req.body.rw;
    
    const newUser = await user.save();
- 
+   let myUser = JSON.stringify(newUser)
     await db.disconnect();
-    res.send({ message: 'Product updated successfully'});
+    res.send(
+      { message: 'Product updated successfully', myData:myUser}
+      
+      );
   } else {
     await db.disconnect();
     res.status(404).send({
@@ -52,7 +93,7 @@ const putHandler = async (req, res) => {
 };
 const deleteHandler = async (req, res) => {
   await db.connect();
-  console.log(req.query)
+
   const product = await Customers.findById(req.query.id);
   if (product) {
     await product.remove();

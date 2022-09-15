@@ -9,6 +9,7 @@ import EditForm2 from '../components/EditForm2'
 
 export default function Home() {
     const router = useRouter()
+
     const {data: session, status} = useSession(
       {
         required: true,
@@ -18,6 +19,7 @@ export default function Home() {
         },
       }
     )
+
     const { showForm, showSearchOK } = useContext(Store);
     if (status=="loading" ) {
         return <div>...loading</div>;
@@ -33,7 +35,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div className='mx-4'>
-              <Headers myPath={"/"}/>
+              <Headers myPath="/" />
             </div>
             
                 <main className='relative bg-green-500 flex items-center justify-center w-full h-full px-10'>

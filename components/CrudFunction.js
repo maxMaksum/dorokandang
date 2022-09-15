@@ -3,7 +3,6 @@ const axios = require('axios');
 
 export const fetchAdd = async(url, x)=>{
   try{
-    // console.log(url, x)
     const response = await axios.post(url, x)
     return response 
   }
@@ -11,6 +10,17 @@ export const fetchAdd = async(url, x)=>{
     console.error(error);
   }
 }
+
+export const fetchUpdate = async(url, x)=>{
+      try{
+        console.log(url, x)
+        const response = await axios.put(url, x)
+        return response 
+      }
+      catch (error) {
+        console.error(error);
+      }
+  }
 
 export  const fetchRead = async(url, mdata)=>{
     try{
@@ -35,3 +45,13 @@ export  const fetchRead = async(url, mdata)=>{
     }
   }
 
+export const fetchSearch = async(url, mdata)=>{
+    try{
+    const response = await axios.get(url, mdata)
+
+    return response
+    }
+  catch (error) {
+    console.error(error);
+  }
+  }

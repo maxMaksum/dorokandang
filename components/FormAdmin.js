@@ -7,12 +7,9 @@ function FormAdmin() {
     const [adminId, setAmdinId] = useState(null)
     const [adminEdit, setAmdinEdit] = useState({})
     
-
-
     const saveForm = async (e)=>{
         e.preventDefault()
         const dataNew = await fetchAdd("/api/admin/admin",admin)
-        console.log(dataNew.data)
         alert(dataNew.data.messege)
         setAdmin({email:"", role:false})
 
@@ -31,71 +28,62 @@ function FormAdmin() {
       e.preventDefault()
       alert("are you sure update the admin?")
       const dataNew = await fetchUpdate("/api/admin/admin",adminEdit)
-      console.log(adminEdit)
       setAmdinId(null)
     }
-  const deleteAdmin = async (e, id) => {
+
+    const deleteAdmin = async (e, id) => {
       e.preventDefault()
-      
       alert("are you sure to delete the admin?")
       const response =  fetchDelete(`/api/admin/${id}`)
       const data = await response
       alert(data.data.message)
-      console.log(data)
-      return data
-      
-      
+      return data      
    }
 
     const fetchDelete = async(url)=>{
-     
-            try{
+      try{
             const response = await axios.delete(url)
-          
             return response
-          
           }
           catch (error) {
             console.error(error);
           }
-          }
+        }
+
     const fetchUsers = async (e)=>{
       e.preventDefault()
       const dataNew = await fetchAllAdmin("/api/admin/admin")
-      // console.log(dataNew.data.data)
       setAdminLists(dataNew.data.data)
-      return dataNew
-  }
+      return dataNew }
 
     const fetchAdd = async(url, x)=>{
       try{
-        const response = await axios.post(url, x)
-        return response 
-      }
-      catch (error) {
-        console.error(error);
-      }
-      }
-
-      const fetchUpdate = async(url, x)=>{
-        try{
-          const response = await axios.put(url, x)
-          return response 
-        }
-        catch (error) {
-          console.error(error);
-        }
-        }
-
-     
-      const fetchAllAdmin = async(url)=>{
-          try{
-            const response = await axios.get(url)
+            const response = await axios.post(url, x)
             return response 
           }
           catch (error) {
             console.error(error);
           }
+        }
+
+    const fetchUpdate = async(url, x)=>{
+        try{
+            const response = await axios.put(url, x)
+              return response 
+            }
+            catch (error) {
+              console.error(error);
+            }
+        }
+
+      const fetchAllAdmin = async(url)=>{
+        try{
+              const response = await axios.get(url)
+              return response 
+            }
+            catch (error) {
+              console.error(error);
+            }
         }
 
   return (

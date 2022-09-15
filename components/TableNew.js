@@ -51,28 +51,19 @@ const editData=(e, x)=>{
 
   const addData=(e, x)=>{
     e.preventDefault()
- 
-    console.log("...add data", x)
-    // console.log(users)
-
     const myUser = users.filter(user=>{
       if(user._id == x._id){
-        console.log("---",user)
         setUserEdit(user)
       }
       
     })
-
-   
     setShowForm(!showForm)
    
  }
 
- console.log(".......",userEdit)
-    const deleteData = async (e, customersId) => {
+ const deleteData = async (e, customersId) => {
        e.preventDefault()
        if(customersId){
-            console.log(customersId)
             const response = await fetchDelete(`/api/customer/${customersId}`, customersId)
             const data = await response
             await removeUsers(customersId)
@@ -82,12 +73,11 @@ const editData=(e, x)=>{
      }
 
         const fetchDelete = async(url, id)=>{
-            console.log(url,id)
+           
             try{
             const response = await axios.delete(url,id)
             const data = response.data
             alert(data.message)
-            console.log(data.message)
             return data
           
           }

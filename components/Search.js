@@ -1,6 +1,7 @@
 import { Store } from "./contex/myContext"
 import { useContext, useEffect, useState } from 'react'
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import{fetchAdd, fetchUpdate, fetchDelete, fetchSearch }from "./CrudFunction"
 import { useRouter } from 'next/router';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { useSession } from "next-auth/react";
@@ -43,30 +44,40 @@ function Search() {
     const Search = async (e) => {
         console.log(dataM)
         e.preventDefault()
-         const data = await fetchSearch("/api/customer/customer",{ params: {...dataM} })
+         const response = await fetchSearch("/api/customer/customer2", { params: {...dataM} })
+         
+          setShowSearch(true)
+         setShowSearchOK(false)
          setShowSearch(true)
          setShowSearchOK(false)
-         return data
-    
-     }
-     
-
-    const fetchSearch = async(url, mdata)=>{
-        try{
-        const response = await axios.get(url, mdata)
-       
-        if(response.status){
+        
+         if(response.status){
             setStatus(true)
         }
         const {respond1} = await response.data
         addUsers(respond1)
         setShowSearch(!showSearch)
         return respond1
-      }
-      catch (error) {
-        console.error(error);
-      }
-      }
+    
+     }
+     
+
+    // const fetchSearch = async(url, mdata)=>{
+    //     try{
+    //     const response = await axios.get(url, mdata)
+       
+    //     if(response.status){
+    //         setStatus(true)
+    //     }
+    //     const {respond1} = await response.data
+    //     addUsers(respond1)
+    //     setShowSearch(!showSearch)
+    //     return respond1
+    //   }
+    //   catch (error) {
+    //     console.error(error);
+    //   }
+    //   }
 
       const getAlamat =(y)=>{
         setDataM({...dataM, alamat: y})
