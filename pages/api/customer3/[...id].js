@@ -86,9 +86,15 @@ const putHandler = async (req, res) => {
   }
 };
 const deleteHandler = async (req, res) => {
+  
+  const {id} = req.query
+  let myId = id[0]
+  console.log(myId)
+  
   await db.connect();
+  const product = await Customers.findById({_id: mongoose.Types.ObjectId(myId)});
 
-  const product = await Customers.findById(req.query.id);
+  
   if (product) {
     await product.remove();
     await db.disconnect();

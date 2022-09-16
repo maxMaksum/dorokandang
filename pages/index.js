@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Headers from '../components/Headers'
 import TableNew from '../components/TableNew'
 import EditForm2 from '../components/EditForm2'
+import Spinner from '../components/Spinner'
 
 export default function Home() {
     const router = useRouter()
@@ -20,9 +21,9 @@ export default function Home() {
       }
     )
 
-    const { showForm, showSearchOK } = useContext(Store);
+    const { showForm, showSearchOK, showSpinner} = useContext(Store);
     if (status=="loading" ) {
-        return <div>...loading</div>;
+        return <div> <Spinner /> </div>;
       }
     
     if(session){
@@ -35,15 +36,16 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <div className='mx-4'>
-              <Headers myPath="/" />
+              <Headers myPath="/" />   
             </div>
-            
-                <main className='relative bg-green-500 flex items-center justify-center w-full h-full px-10'>
-                    <TableNew />
-                    <div className = {showSearchOK?"bg-green-900 h-screen w-screen absolute top-0 ":"hidden"}></div>
-
+                <main className='relative bg-green-600 flex items-center justify-center w-screen h-screen px-10'>
+                  
+                     {showSpinner?
+                     <Spinner className="z-50" /> : <TableNew />
+                     }
+      
                 </main>
-                <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-0':'hidden'}>
+                <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-40':'hidden'}>
                     <EditForm2/>
                 </div>
                 

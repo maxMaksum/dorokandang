@@ -12,7 +12,7 @@ function Headers({myPath}) {
   
   return (
 
-      <header className="sticky top-0 z-40 bg-gray-200 flex items-center justify-between py-1.5 px-3 focus-within:shadow-lg w-full">
+      <header className="top-0  left-0 right-0 z-40 bg-gray-200 flex items-center justify-between py-1.5 px-3 focus-within:shadow-lg w-full">
           <div onClick={()=>router.push("/")} className="flex  items-center space-x-2 cursor-pointer ">
             <Image src="/logo-puskesmas.png" width={40} height={40} />
               <p className='hidden'>LASEM </p>

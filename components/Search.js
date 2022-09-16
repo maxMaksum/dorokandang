@@ -14,12 +14,13 @@ const axios = require('axios').default;
 function Search() {
 
     const [newStatus, setStatus] = useState(false)
-    const { addUsers, readUsers, users, setUsers, setShowSearchOK, showSearchOK } = useContext(Store);
-    const [showSearch, setShowSearch] = useState(true)
+    const { addUsers,setShowSpinner, setShowSearchOK, showSearchOK } = useContext(Store);
+    const [showSearch, setShowSearch, ] = useState(true)
     const {data: session, status} = useSession()
 
     const showS = (e)=>{
         e.preventDefault()
+       
         setShowSearch(!showSearch)
         setShowSearchOK(!showSearchOK)
     }
@@ -44,8 +45,9 @@ function Search() {
     const Search = async (e) => {
         console.log(dataM)
         e.preventDefault()
+         setShowSpinner(true)
          const response = await fetchSearch("/api/customer/customer2", { params: {...dataM} })
-         
+         setShowSpinner(false)
          setShowSearch(true)
          setShowSearchOK(!showSearchOK)
         
@@ -53,6 +55,7 @@ function Search() {
             setStatus(true)
         }
         const {respond1} = await response.data
+        
         addUsers(respond1)
         return respond1
     

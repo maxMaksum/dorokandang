@@ -7,6 +7,7 @@ export function StoreProvider({ children }) {
   const [userEdit, setUserEdit] = useState({});
   const [showForm, setShowForm] = useState(false);
   const [showSearchOK, setShowSearchOK] = useState(true);
+  const [showSpinner, setShowSpinner] = useState(false);
  
 const addUsers = (newUser) => {
   setUsers(newUser);
@@ -44,6 +45,8 @@ const resetUsers = ()=>{
       resetUsers,
       removeUsers,
       updateUsers,
+      showSpinner,
+      setShowSpinner,
       showForm,
       setShowForm,
       userEdit, 

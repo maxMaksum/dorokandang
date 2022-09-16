@@ -5,13 +5,13 @@ import { useRouter } from 'next/router';
 import SearchInput from "./SearchInput";
 
 function EditForm2() {
-  const { addUsers, users,  setUsers, removeUsers, showForm, userEdit, setUserEdit, setShowForm,updateUsers } = useContext(Store);
+  const { addUsers, users,  setUsers, removeUsers, showForm, userEdit, setShowSpinner, setUserEdit, setShowForm,updateUsers } = useContext(Store);
   const [showAdd, setShowAdd] =useState(true)
   const [showEdit, setShowEdit] =useState(true)
   const [dataM, setDataM] = useState({_id:"", rm:"", nama:"",namakk:"", alamat:"",rt:"",rw:""})
   const [showInput, setShowInput] =useState(true)
 
-    const addForm = async (e)=>{
+ const addForm = async (e)=>{
         e.preventDefault()
         setShowInput(false)
         setShowAdd(!showAdd)
@@ -28,8 +28,10 @@ function EditForm2() {
 
     const saveForm = async(e)=>{
         e.preventDefault()
+        setShowSpinner(true)
         setShowAdd(!showAdd)
         const data2 = await fetchAdd("/api/customer/customers2", dataM)
+        setShowSpinner(false)
         const data3 = JSON.parse(data2.data.newUser)
         setUsers([...users, {rm:data3.rm, 
             nama:data3.nama, 
@@ -44,7 +46,9 @@ function EditForm2() {
     e.preventDefault()
     setShowEdit(true)
     setShowInput(false)
+    setShowSpinner(true)
     const res = await fetchUpdate(`/api/customer3/${dataM._id}`, dataM)
+    setShowSpinner(false)
     let myDataq = JSON.parse(res.data.myData)
     const myUserq = users.map(x=>{
         if(x._id == myDataq._id){
@@ -62,18 +66,22 @@ function EditForm2() {
      console.log(myUserq)
     alert(res.data.message)
     setUsers(myUserq)
-    setShowForm(!showForm)
+    setShowForm(false)
   
     }
 
     const deleteForm = async(e, id)=>{
     e.preventDefault()
-    const res = await fetchDelete(`/api/customer/${id}`)
-        alert(res.data.message)
+    setShowSpinner(true)
+    const res = await fetchDelete(`/api/customer3/${id}`)
+    alert(res.data.message)
+    setShowSpinner(false)
+    setShowForm(false)
+        
         const newUser = users.filter(x=>{
         return x._id !== id})
     setUsers(newUser)
-    setShowForm(!showForm)}
+    }
 
     const getAlamat =(y)=>{
         setDataM({...dataM, alamat: y})
@@ -93,7 +101,7 @@ function EditForm2() {
   return (
     <div className='w-full '>
         <div className='flex items-center justify-center'>
-        <form className=" w-96 bg-gray-200 px-4">
+        <form className=" w-96 bg-green-900 p-4 z-50 rounded">
             <div className ="mb-2">
                 <label htmlFor="rm" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RM</label>
                 <input
