@@ -20,7 +20,7 @@ function Search() {
 
     const showS = (e)=>{
         e.preventDefault()
-       
+       console.log("ok")
         setShowSearch(!showSearch)
         setShowSearchOK(!showSearchOK)
     }
@@ -48,7 +48,7 @@ function Search() {
          setShowSpinner(true)
          const response = await fetchSearch("/api/customer/customer2", { params: {...dataM} })
          setShowSpinner(false)
-         setShowSearch(true)
+         setShowSearch(false)
          setShowSearchOK(!showSearchOK)
         
          if(response.status){
@@ -71,7 +71,7 @@ function Search() {
         <div className='flex flex-col justify-center items-start w-full'>
             <form onSubmit= {(e)=>Search(e)} className='flex flex-col items-center mb-2 py-2 relative w-full relative'>
                 <div className='flex items-center justify-center space-x-2 w-full'>
-                    <div className='flex items-center justify-center rounded animate-bounce '>
+                    <div className='cursor-pointer flex items-center justify-center rounded animate-bounce '>
                        <KeyboardDoubleArrowDownIcon onClick={
                                 (e) =>showS(e)
                             } />
@@ -95,7 +95,7 @@ function Search() {
 
                             
                 <div className={
-                    showSearch ? 'hidden' : 'block text-black absolute left-18 top-20 space-y-4 rounded w-5/6 bg-green-900 ' 
+                    !showSearch ? 'hidden' : 'text-black absolute left-18 top-20 space-y-4 rounded w-5/6 z-50 ' 
                 }>
               
                     <div className=" rounded-sm shadow-sm">
