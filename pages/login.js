@@ -5,6 +5,7 @@ import {useSession, signIn, signOut, getSession} from "next-auth/react"
 import { useRouter } from 'next/router'
 import HeadersHome from '../components/HeadersHome'
 import Video from '../components/Video'
+import Masonry from './Masonry'
 
 export default function Home() {
 
@@ -20,18 +21,9 @@ const router = useRouter()
         </Head>
         <HeadersHome />
          <Video />
-         <div className="flex items-center mr-6">
-            <div onClick={signIn}  className="flex items-center justify-center  cursor-pointer">
-            <Image src="/google.png" width={40} height={40} />
-              <p className='mx-4 sm:inline-flex text-gray-50 bg-gray-800 p-2 bg-opacity-25'>LOGIN WITH GOOGLE</p>
-            
-            </div>
-        </div>
         <main className={styles.main}>
          
-          
-      
-  
+          <Masonry />
           <div className={styles.grid}>
             <a href="https://nextjs.org/docs" className={styles.card}>
               <h2>Documentation &rarr;</h2>
