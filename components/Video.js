@@ -4,13 +4,13 @@ import Image from 'next/image'
 
 function Video() {
   return (
- <div class="flex flex-col overflow-hidden bg-white relative">
+ <div class="flex flex-col overflow-hidden bg-green-500 relative">
    
     <div class="w-full">
         <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full" src={"/viky.jpg"} alt=""/>
     </div>
 
-    <div class="absolute top-0 bottom-0 left-0 bg-black bg-opacity-50 z-40 h-56 w-full sm:h-72 md:h-96 lg:h-full lg:w-full">
+    <div class="absolute top-0 bottom-0 left-0 bg-green-900 bg-opacity-50 z-40 h-56 w-full sm:h-72 md:h-96 lg:h-full lg:w-full">
     </div>
  
     <div class=" absolute top-0 left 0 bg-indigo-800 bg-opacity-25 h-full w-full">
