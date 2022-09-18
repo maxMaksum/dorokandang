@@ -7,6 +7,7 @@ import Headers from '../components/Headers'
 import TableNew from '../components/TableNew'
 import EditForm2 from '../components/EditForm2'
 import Spinner from '../components/Spinner'
+import FormAdd from '../components/FormAdd'
 
 export default function Home() {
     const router = useRouter()
@@ -21,12 +22,18 @@ export default function Home() {
       }
     )
 
-    const { showForm, showSearchOK, showSpinner} = useContext(Store);
+    const { showForm, showSearchOK, showAddForm, showSpinner} = useContext(Store);
+    useEffect(() => {
+      if (!session.user.admin) {
+          router.push('/login');
+        }
+    }, []);
+
     if (status=="loading" ) {
         return <div> <Spinner /> </div>;
       }
     
-    if(session){
+    if(session.user.admin){
     return (
 
         <div  className="w-full relative bg-gray-200 ">
@@ -43,10 +50,14 @@ export default function Home() {
                      {showSpinner?
                      <Spinner className="z-50" /> : <TableNew />
                      }
-      
+            
                 </main>
-                <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-40':'hidden'}>
+                
+                <div className={showForm?'absolute top-20 m-auto left-0 right-0 z-30':'hidden'}>
                     <EditForm2/>
+                </div>
+                <div className={showAddForm ?'absolute top-20 m-auto left-0 right-0 z-30':'hidden'}>
+                    <FormAdd/>
                 </div>
                 
         </div>

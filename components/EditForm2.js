@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import {Types}from "mongoose"
 import { Store } from './contex/myContext';
 import{fetchAdd, fetchUpdate, fetchDelete, fetchSearch }from "./CrudFunction"
 import { useRouter } from 'next/router';
@@ -19,52 +20,54 @@ function EditForm2() {
       
     }
 
-    const editForm = async (e)=>{
-        e.preventDefault()
-        setShowInput(false)
-        setShowEdit(false)
-      
-    }
-
+  
     const saveForm = async(e)=>{
         e.preventDefault()
         setShowSpinner(true)
         setShowAdd(!showAdd)
         const data2 = await fetchAdd("/api/customer/customers2", dataM)
         setShowSpinner(false)
-        const data3 = JSON.parse(data2.data.newUser)
-        setUsers([...users, {rm:data3.rm, 
-            nama:data3.nama, 
-            alamat:data3.alamat, 
-            rm:data3.rm,
-            rt:data3.rt}])
-        alert(data2.data.message)
+        console.log(data2)
+        // setUsers([...users, {rm:data3.rm, 
+        //     nama:data3.nama, 
+        //     alamat:data3.alamat, 
+        //     rm:data3.rm,
+        //     rt:data3.rt}])
+        // alert(data2.data.message)
   
         setShowForm(!showForm)}
 
     const updateForm = async (e)=>{
-    e.preventDefault()
-    setShowEdit(true)
-    setShowInput(false)
-    setShowSpinner(true)
-    const res = await fetchUpdate(`/api/customer3/${dataM._id}`, dataM)
-    setShowSpinner(false)
-    let myDataq = JSON.parse(res.data.myData)
-    const myUserq = users.map(x=>{
-        if(x._id == myDataq._id){
-            return{
-                ...x, 
-                rm:myDataq.rm,
-                nama:myDataq.nama,
-                alamat:myDataq.alamat,
-                rt:myDataq.rt, 
-                rw:myDataq.rw
+        e.preventDefault()
+        setShowEdit(true)
+        setShowInput(false)
+        setShowSpinner(true)
+
+        const res = await fetchUpdate(`/api/customer3/${dataM._id}`, dataM)
+       
+        alert(res.data.message)
+        const myX = res?.data
+        console.log ("xx",myX)
+        setShowSpinner(false)
+        console.log(res)
+        
+        let myDataq1 = await JSON.parse(res.data.myData)
+        console.log(myDataq1)
+        const myUserq = users.map(x=>{
+            if(x._id == myDataq1._id){
+                return{
+                    ...x, 
+                    rm:myDataq1.rm,
+                    nama:myDataq1.nama,
+                    namakk:myDataq1.namakk,
+                    alamat:myDataq1.alamat,
+                    rt:myDataq1.rt, 
+                    rw:myDataq1.rw
+                }
             }
-        }
-       return x 
+        return x 
     })
-     console.log(myUserq)
-    alert(res.data.message)
+    console.log(myUserq)
     setUsers(myUserq)
     setShowForm(false)
   
@@ -74,13 +77,18 @@ function EditForm2() {
     e.preventDefault()
     setShowSpinner(true)
     const res = await fetchDelete(`/api/customer3/${id}`)
-    alert(res.data.message)
-    setShowSpinner(false)
-    setShowForm(false)
+
+    const {message} = await res.data
+
+    console.log(message)
+
+    alert(message)
+        setShowSpinner(false)
+        setShowForm(false)
         
-        const newUser = users.filter(x=>{
+    const newUser = users.filter(x=>{
         return x._id !== id})
-    setUsers(newUser)
+        setUsers(newUser)
     }
 
     const getAlamat =(y)=>{
@@ -105,7 +113,6 @@ function EditForm2() {
             <div className ="mb-2">
                 <label htmlFor="rm" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RM</label>
                 <input
-                disabled={showInput}
                  type="text"
                  id="rm"
                  className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
@@ -117,7 +124,6 @@ function EditForm2() {
             <div className ="mb-2">
                 <label htmlFor="nama" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama</label>
                 <input
-                 disabled={showInput}
                  type="text" id="nama" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
                 value={dataM.nama ||""}
                 onChange ={(e)=>setDataM({...dataM, nama:e.target.value})}
@@ -126,7 +132,6 @@ function EditForm2() {
             <div className ="mb-2">
                 <label htmlFor="nama-kk" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nama KK</label>
                 <input
-                 disabled={showInput}
                  type="text" id="nama-kk" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
                 value={dataM.namakk||""}
                 onChange ={(e)=>setDataM({...dataM, namakk:e.target.value})}
@@ -135,7 +140,6 @@ function EditForm2() {
             <div className ="mb-2">
                 <label htmlFor="alamat" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RT</label>
                 <input
-                 disabled={showInput}
                  type="text" id="alamat" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
                 value={dataM.rt||""}
                 onChange ={(e)=>setDataM({...dataM, rt:e.target.value})}
@@ -144,7 +148,7 @@ function EditForm2() {
             <div className ="mb-2 relative">
                 <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 ">RW</label>
                    <SearchInput
-                    disabled={showInput}
+
                     className={'absolute top-0 left-0 z-20  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light'} 
                     getAlamat={getAlamat}
                     alamatQ = {dataM.alamat}
@@ -153,11 +157,8 @@ function EditForm2() {
             </div>
           
              <div className="flex items-center justify-center space-x-4">
-                <button onClick={(e)=>editForm(e)}type="submit"
-                 className = {showEdit ? "text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800":"hidden"
-                }>Edit</button>
-
-               <button onClick={(e)=>updateForm(e, dataM)}type="submit" className ={showEdit ? "hidden":"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"}>Update</button>
+               
+               <button onClick={(e)=>updateForm(e, dataM)}type="submit" className ={"text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"}>Update</button>
 
                <button 
                onClick={(e)=>addForm(e)}

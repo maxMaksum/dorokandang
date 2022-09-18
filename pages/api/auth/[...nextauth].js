@@ -1,7 +1,9 @@
+import axios from "axios";
 import NextAuth from "next-auth/next"
 import  GoogleProvider from "next-auth/providers/google"
 import db from '../../../lib/db';
 import User from "../../../lib/User";
+
 
 export default NextAuth({
   providers: [
@@ -27,23 +29,25 @@ export default NextAuth({
       if(user?.id) token._id = user.id;
       return token;
     },
-    async session({ session, token }) {
-      await db.connect()
-      const existingUser = await User.findOne({ email: token.email });
+
+  async session({ session, token }) {
+    await db.connect()
+    const existingUser = await User.findOne({ email: token.email });
+    console.log(existingUser)
+
+    if (token?._id && existingUser ) {
+      session.user._id = token._id;
+      session.user.admin = existingUser.role
+    } else {
+      session.user._id = token._id;
+      session.user.admin = false
+
+    }
+
+    return session;
+     
       
-        if (token?._id && existingUser ) {
-          session.user._id = token._id;
-          session.user.admin = existingUser.isAdmin
-        } else {
-          session.user._id = token._id;
-          session.user.admin = false
-
-        }
-
-        return session;
-   
-    
-    },
+      }
    
   },
 

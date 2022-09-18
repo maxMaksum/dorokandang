@@ -1,112 +1,63 @@
-import { connectToDatabase } from "../../../lib/monggodb"
+import {getSession} from "next-auth/react"
 const ObjectId = require('mongodb').ObjectId;
+import {Types} from "mongoose"
+import User from '../../../lib/User'
+import db from '../../../lib/db';
+;
 
 export default function handler(req, res) {
-
-  switch (req.method) {
-      case 'POST': {
-          return addUsers(req, res);
-      }
-
-      case "GET" : {
-        return getUsers(req, res)
-      }
-      case 'PUT': {
-          return updateUsers(req, res);
-      }
-      case 'DELETE': {
-          return deleteUser(req, res);
-      }
-      default:
-          return res.status(200).json({ name: 'John Doe' })
-  }
-   
+ 
+  if (req.method === 'GET') {
+    return getHandler(req, res);
   }
 
-  const addUsers= async (req, res)=>{
-    const {email, role} = req.body
-    try {
-      let { db } = await connectToDatabase();
-      const resAdmin = await db.collection('users').find( 
-        { email: { $regex: email, $options: 'i' }})
-        .sort({ published: -1 })
-        .toArray();
-    
-      if(resAdmin.length>0){
-        return res.json({
-            messege: 'User Already Exist',
-            success: true,
-            respond1 : resAdmin[0] 
-        })
-          const res1 = await db.collection('users').insertOne(req.body)
-      console.log(res1)
-      return res.json({
-          messege: 'Post added successfully',
-          success: true,
-          respond1 : res1[0] 
-      }); 
-      }
-     
-  } 
+   if (req.method === 'POST') {
+    return postHandler(req, res);
+  }
 
-  catch (error) {
-    return res.json({
-        message: new Error(error).message,
-        success: false,
-    });
-}};
-const updateUsers = async (req, res)=>{
-    console.log(req.body)
-    try {
-      let { db } = await connectToDatabase();
-      let {_id, email, role} = req.body
-      var myquery = {_id: new ObjectId(_id)};
-      var newvalues = { $set:  { email:email, role:role }}
-      await db.collection("users").updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err; 
-     });
+  res.status(200).json({ name: 'John Doe' })
+}
 
 
-        return res.json({
-            message: 'Admin updated successfully',
-            success: true
-        })
-     
-      }
-      catch (error) {
-        return res.json({
-            message: new Error(error).message,
-            success: false,
-        });
-    }};
+const getHandler = async (req, res) => {
+await db.connect()
+  const admin = await User.find({})
+  const newAdmin = JSON.stringify(admin)
+  
+  console.log(newAdmin)
+  return res.json({
+    message: 'Post added successfully',
+    newAdmin:newAdmin,
+    success: true
+})
+    // respond1 : admin })
+};
 
-const getUsers = async (req, res)=>{
+
+
+
+const postHandler = async (req, res) => {
+console.log(req.body)  
+const  {email} = req.body
+  await db.connect()
+
+  const newProduct = new User({
+    _id:new Types.ObjectId(),
+    email:req.body.email,
+    role:req.body.role,
    
-    try {
-      let { db } = await connectToDatabase();
-      const resAdmin = await db.collection('users').find({})
-        .sort({ published: -1 })
-        .toArray();
-
-        return res.json({
-            message: 'Post added successfully',
-            success: true,
-            data : resAdmin
-        })
-    
-         
-      }
-      catch (error) {
-        return res.json({
-            message: new Error(error).message,
-            success: false,
-        });
-    }};
-    
-       
-      
-     
-
+  });
+  const product = await newProduct.save();
   
+  const newUser1 = JSON.stringify(product)
+  console.log(newUser1)
+ 
 
-  
+  await db.disconnect();
+  res.send({ message: 'User created successfully', newUser:newUser1});
+};
+
+
+
+
+

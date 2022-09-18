@@ -63,10 +63,10 @@ const saveData=async (e)=>{
 
  }
 
-  const addData=(e, x)=>{
+  const detailData=(e, x)=>{
     e.preventDefault()
     const myUser = users.filter(user=>{
-      if(user._id == x._id){
+      if(user._id === x._id){
         setUserEdit(user)
       }
       
@@ -135,12 +135,10 @@ const saveData=async (e)=>{
                                         <div  onClick={(e)=>editData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
                                             <BorderColorIcon />
                                         </div>
-                                        <div  onClick={(e)=>addData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
-                                                <DataSaverOnIcon/>
+                                        <div  onClick={(e)=>detailData(e, customer)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
+                                            <DataSaverOnIcon/>
                                         </div>
-                                        <div  onClick={()=>router.push(`/id/${customer._id}`)} className=' cursor-pointer w-5 h-5 rounded-full bg-gray-50 flex items-center justify-center'>
-                                            <TouchAppIcon />
-                                        </div> 
+                                       
                                     </div>
                                 </div>  
         

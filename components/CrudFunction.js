@@ -46,6 +46,7 @@ export  const fetchRead = async(url, mdata)=>{
   }
 
 export const fetchSearch = async(url, mdata)=>{
+  console.log(url)
     try{
     const response = await axios.get(url, mdata)
 

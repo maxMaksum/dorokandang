@@ -8,6 +8,7 @@ import SearchInput from "./SearchInput";
 function FormAdd() {
   const [dataM, setDataM] = useState({_id:"", rm:"", nama:"",namakk:"", alamat:"",rt:"",rw:""})
 
+  const { showForm, showSearchOK, showAddForm, setShowAddForm, showSpinner} = useContext(Store);
   const router = useRouter()
 
   const saveForm = async(e)=>{
@@ -23,7 +24,7 @@ function FormAdd() {
 
  const closeOK = (e)=>{
         e.preventDefault()
-        router.push("./")
+        setShowAddForm(false)
       }   
          
   return (

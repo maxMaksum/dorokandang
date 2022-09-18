@@ -1,7 +1,7 @@
 import { Store } from "./contex/myContext"
 import { useContext, useEffect, useState } from 'react'
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import{fetchAdd, fetchUpdate, fetchDelete, fetchSearch }from "./CrudFunction"
+import{ fetchRead }from "./CrudFunction"
 import { useRouter } from 'next/router';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import { useSession } from "next-auth/react";
@@ -14,7 +14,7 @@ const axios = require('axios').default;
 function Search() {
 
     const [newStatus, setStatus] = useState(false)
-    const { addUsers,setShowSpinner, setShowSearchOK, showSearchOK } = useContext(Store);
+    const { addUsers,setShowSpinner} = useContext(Store);
     const [showSearch, setShowSearch, ] = useState(true)
     const {data: session, status} = useSession()
 
@@ -22,7 +22,6 @@ function Search() {
         e.preventDefault()
        console.log("ok")
         setShowSearch(!showSearch)
-        setShowSearchOK(!showSearchOK)
     }
     
  useEffect(()=>{
@@ -46,18 +45,19 @@ function Search() {
         console.log(dataM)
         e.preventDefault()
          setShowSpinner(true)
-         const response = await fetchSearch("/api/customer/customer2", { params: {...dataM} })
+        const response = await fetchRead("/api/customer/customers2", { params: {...dataM} })
+         console.log("****",response)
          setShowSpinner(false)
-         setShowSearch(false)
-         setShowSearchOK(!showSearchOK)
+         setShowSearch(true)
+       
         
          if(response.status){
             setStatus(true)
         }
-        const {respond1} = await response.data
+     
         
-        addUsers(respond1)
-        return respond1
+        addUsers(response)
+        return response
     
      }
 
@@ -95,9 +95,8 @@ function Search() {
 
                             
                 <div className={
-                    !showSearch ? 'hidden' : 'text-black absolute left-18 top-20 space-y-4 rounded w-5/6 z-50 ' 
-                }>
-              
+                    !showSearch?'text-black absolute left-18 top-20 space-y-4 rounded w-5/6 z-50' :'hidden' } >
+                 <div className="h-full w-full bg-green-400"></div>   
                     <div className=" rounded-sm shadow-sm">
                         <input 
                         value={dataM.nama}
