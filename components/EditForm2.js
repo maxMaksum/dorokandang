@@ -109,7 +109,7 @@ function EditForm2() {
   return (
     <div className='w-full '>
         <div className='flex items-center justify-center'>
-        <form className=" w-96 bg-green-900 p-4 z-50 rounded">
+        <form className=" w-96 z-50 bg-white rounded-lg border border-gray-200 shadow-md p-2 dark:bg-gray-800 dark:border-gray-70">
             <div className ="mb-2">
                 <label htmlFor="rm" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RM</label>
                 <input
@@ -145,8 +145,17 @@ function EditForm2() {
                 onChange ={(e)=>setDataM({...dataM, rt:e.target.value})}
                 />
             </div>
+
+            <div className ="mb-2">
+                <label htmlFor="alamat" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RW</label>
+                <input
+                 type="text" id="alamat" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
+                value={dataM.rw||""}
+                onChange ={(e)=>setDataM({...dataM, rt:e.target.value})}
+                />
+            </div>
             <div className ="mb-2 relative">
-                <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 ">RW</label>
+                <label htmlFor="rw" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 ">Alamat</label>
                    <SearchInput
 
                     className={'absolute top-0 left-0 z-20  shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light'} 

@@ -122,7 +122,7 @@ const updateForm = async (e)=>{
     }   
 
   return (
-          <div className='w-full h-screen bg-green-500'>
+          <div className='w-full h-screen bg-white rounded-lg border border-gray-200 shadow-md p-2 dark:bg-gray-800 dark:border-gray-70'>
             <p className='text-center p-2'>RM DETAIL</p>
             <div className='flex items-center justify-center'>
               <form className=" w-96 bg-gray-200 p-4 ">

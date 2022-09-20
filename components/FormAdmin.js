@@ -19,11 +19,7 @@ function FormAdmin() {
 
     const editForm = async (e)=>{
       e.preventDefault()
-      setEditAdmin(false)
-     
-    
-     
-
+      setEditAdmin(false) 
   }
 
   const addForm = async (e)=>{
@@ -32,8 +28,6 @@ function FormAdmin() {
     setAdmin(
       {email:"", role:false}
     )
-   
-
 }
 
     const editClick= (e,x)=>{
@@ -49,10 +43,7 @@ function FormAdmin() {
       e.preventDefault()
       alert("are you sure update the admin?")
       const dataNew = await fetchUpdate(`/api/newAdmin/${admin.email}`, admin)
-      setEditAdmin(true)
-   
-      
-     
+      setEditAdmin(true)   
     }
 
     const deleteForm = async (e, id) => {
@@ -84,7 +75,7 @@ function FormAdmin() {
       setAdminLists(newAdmin)
       return dataNew }
 
-      const fetchUser = async (e)=>{
+    const fetchUser = async (e)=>{
         e.preventDefault()
         const dataNew = await fetchAdmin(`/api/newAdmin/${searchAdmin}`)
         console.log(dataNew)
@@ -119,7 +110,7 @@ function FormAdmin() {
             }
         }
 
-      const fetchAllAdmin = async(url)=>{
+    const fetchAllAdmin = async(url)=>{
         try{
               const response = await axios.get(url)
               return response 
@@ -128,7 +119,7 @@ function FormAdmin() {
               console.error(error);
             }
         }
-        const fetchAdmin = async(url)=>{
+    const fetchAdmin = async(url)=>{
           try{
                 const response = await axios.get(url)
                 return response 
@@ -138,26 +129,26 @@ function FormAdmin() {
               }
           }
 
-        const cancelForm = (e)=>{
+    const cancelForm = (e)=>{
           e.preventDefault()
           setEditAdmin(true)
           setNewInput(true)
         }  
 
   return (
-    <div className='w-full bg-green-500 '>
+    <div className='w-full h-full bg-gray-50 '>
         <div className='flex flex-col items-center justify-center w-full'>
-            <form className='grid grid-cols-12 gap-2 mb-4 w-1/2 space-y-2 mt-6'>
+            <form className='grid grid-cols-12 gap-2 mb-4 w-5/6 space-y-2 mt-6 rounded-lg border border-gray-200 shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700'>
               <input 
               value={searchAdmin}
               onChange={(e)=>setSearchAdmin(e.target.value)}
               placeholder="maxmaksum@gmail.com" 
               require
               type="email" 
-              className="grid col-span-10 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-              <button onClick={(e)=>fetchUser(e)} className ="grid col-span-2 text-white bg-green-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+              className="grid col-span-10 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 px-2" />
+              <button onClick={(e)=>fetchUser(e)} className ="grid col-span-2 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 text-center font-bold p-2">Search</button>
             </form>
-            <form className=" w-96 bg-gray-200 px-4 py-4 w-1/2">
+            <form className=" w-96 bg-gray-200 px-4 py-4 w-5/6">
                 <div className ="mb-2">
                     <label htmlFor="nama" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
                     <input type="text" id="nama" className ="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" 
@@ -228,14 +219,14 @@ function FormAdmin() {
            
          </div>
          <div className='flex flex-col justify-center items-center'>
-         <div >
+         <div className="bg-green-500 w-5/6 h-full p-2" >
              {adminLists && adminLists.map(x=>(
               <div key={x._id} className="grid grid-cols-12 gap-4">
-                <div className='grid col-span-5 bg-gray-50 text-green-900 flex items-center mt-2 p-2'>
+                <div className='grid col-span-8 bg-gray-50 text-green-900 flex items-center mt-2 p-2'>
                 <p> {x.email}</p>
                
                </div>
-                <div className='grid col-span-5 bg-gray-50 text-green-900 flex items-center mt-2 p-2'>{x.role?<p>True</p>:<p>False</p>}
+                <div className='grid col-span-2 bg-gray-50 text-green-900 flex items-center mt-2 p-2'>{x.role?<p>True</p>:<p>False</p>}
                 </div>
                 <button 
                 onClick={ (e)=> editClick(e, x)}

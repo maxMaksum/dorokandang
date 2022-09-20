@@ -10,7 +10,7 @@ function Video() {
         <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full" src={"/viky.jpg"} alt=""/>
     </div>
 
-    <div class="absolute top-0 bottom-0 left-0 bg-green-900 bg-opacity-50 z-40 h-56 w-full sm:h-72 md:h-96 lg:h-full lg:w-full">
+    <div class="absolute top-0 bottom-0 left-0 bg-gray-900 bg-opacity-50 z-40 h-56 w-full sm:h-72 md:h-96 lg:h-full lg:w-full">
     </div>
  
     <div class=" absolute top-0 left 0 bg-indigo-800 bg-opacity-25 h-full w-full">
@@ -22,10 +22,10 @@ function Video() {
           </h1>
           
             <footer className="absolute top-6 left-10">
-            <h1 class="font-bold tracking-tight text-gray-900 opacity-75 space-x-4 text-2xl sm:text-4xl ">
-                <span class="bg-green-500 block text-gray-50 xl:inline text-center p-2 rounded-md">Project By:</span>
-                <span class="bg-green-500 text-indigo-500 block text-gray-50 xl:inline text-center p-2 rounded-md">Viky Febry Q.</span>
-          </h1>
+            <p class="font-bold tracking-tight text-gray-900 space-x-4 text-2xl ">
+                <span class="bg-green-700 block text-gray-50 text-center p-2 rounded-md">Project By: Viky Febry Q</span>
+               
+          </p>
         </footer>
         </main>
         </div>

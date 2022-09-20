@@ -14,7 +14,7 @@ const axios = require('axios').default;
 function Search() {
 
     const [newStatus, setStatus] = useState(false)
-    const { addUsers,setShowSpinner} = useContext(Store);
+    const { addUsers,setShowSpinner,setShowSearchOK, showSearchOK} = useContext(Store);
     const [showSearch, setShowSearch, ] = useState(true)
     const {data: session, status} = useSession()
 
@@ -22,6 +22,7 @@ function Search() {
         e.preventDefault()
        console.log("ok")
         setShowSearch(!showSearch)
+        setShowSearchOK(!showSearchOK)
     }
     
  useEffect(()=>{
@@ -49,6 +50,8 @@ function Search() {
          console.log("****",response)
          setShowSpinner(false)
          setShowSearch(true)
+         setShowSearchOK(false)
+       
        
         
          if(response.status){
@@ -68,15 +71,15 @@ function Search() {
      
     return (
 
-        <div className='flex flex-col justify-center items-start w-full'>
-            <form onSubmit= {(e)=>Search(e)} className='flex flex-col items-center mb-2 py-2 relative w-full relative'>
+        <div className='flex flex-col justify-center items-start w-full relative'>
+            <form onSubmit= {(e)=>Search(e)} className='flex flex-col items-center mb-2 py-2 w-full '>
                 <div className='flex items-center justify-center space-x-2 w-full'>
                     <div className='cursor-pointer flex items-center justify-center rounded animate-bounce '>
                        <KeyboardDoubleArrowDownIcon onClick={
                                 (e) =>showS(e)
                             } />
                     </div>
-                    <div className ="w-5/6">
+                    <div className ="w-5/6 bg-gray-200">
                         <input 
                         type="search" id="search-dropdown" className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search RM..."
                         value={dataM.rm}
@@ -92,24 +95,24 @@ function Search() {
                     value="Submit"
                     > <SearchRoundedIcon /></button>
                 </div>
-
-                            
+     
+              
                 <div className={
-                    !showSearch?'text-black absolute left-18 top-20 space-y-4 rounded w-5/6 z-50' :'hidden' } >
-                 <div className="h-full w-full bg-green-400"></div>   
+                    !showSearch?'text-black absolute left-18 top-20 space-y-4 rounded w-5/6 z-40' :'hidden' } >
+                    
                     <div className=" rounded-sm shadow-sm">
                         <input 
                         value={dataM.nama}
                         onChange ={(e)=>setDataM({...dataM, nama:e.target.value})}
                         type="text"
-                        className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Nama..."/>
+                        className=" border border-gray-300 block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Nama..."/>
                     </div>
                     <div className="rounded-sm shadow-sm">
                         <input 
                         type='text'
                         value={dataM.namakk}
                         onChange ={(e)=>setDataM({...dataM, namakk:e.target.value})}
-                         className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
+                         className="block  border border-gray-300 p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search NAMA KK..." />
                     </div>
 
                     <SearchInput getAlamat={getAlamat}/>

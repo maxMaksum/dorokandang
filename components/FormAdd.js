@@ -14,7 +14,9 @@ function FormAdd() {
   const saveForm = async(e)=>{
     e.preventDefault()
     const data2 = await fetchAdd("/api/customer/customers2", dataM)
-    alert(data2.data.message)
+    // console.log(data2.data)
+    alert(data2?.data.message)
+    setShowAddForm(!showAddForm)
   }
 
   const getAlamat =(y)=>{
@@ -30,7 +32,7 @@ function FormAdd() {
   return (
     <div className='w-full '>
         <div className='flex items-center justify-center'>
-        <form className=" w-96 bg-gray-200 p-4 mt-4">
+        <form className=" w-96 bg-white rounded-lg border border-gray-200 shadow-md p-2 dark:bg-gray-800 dark:border-gray-70 p-4 mt-4">
             <div className ="mb-2">
                 <label htmlFor="rm" className ="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">RM</label>
                 <input
