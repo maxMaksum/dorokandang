@@ -40,7 +40,10 @@ const saveData=async (e)=>{
     e.preventDefault()
     const res = await fetchUpdate(`/api/customer3/${adminEdit._id}`, adminEdit)
     setShowSpinner(true)
-    let myDataq = JSON.parse(res.data.myData)
+    let myDataq1 = await JSON.parse(res.data.myData)
+    const myDataq = await myDataq1
+
+
     setShowSpinner(false)
     const myUserq = users.map(x=>{
         if(x._id == myDataq._id){
@@ -56,6 +59,7 @@ const saveData=async (e)=>{
        return x 
     })
   
+    console.log(myUserq)
     alert(res.data.message)
     setUsers(myUserq)
     setAdminId(false)

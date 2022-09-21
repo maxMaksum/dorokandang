@@ -7,11 +7,7 @@ import { _id } from "@next-auth/mongodb-adapter";
 
 const handler = async (req, res) => {
   const session = await getSession({ req });
-  // if (!session || (session && !session.user.isAdmin)) {
-  //   return res.status(401).send('signin required');
-  // }
 
-  // const { user } = session;
   if (req.method === 'GET') {
     return getHandler(req, res);
   } else if (req.method === 'PUT') {
@@ -47,43 +43,41 @@ const getHandler = async (req, res) => {
 };
 
 const putHandler = async (req, res) => {
-  console.log("tytytyty",req.body._id)
 
 const { _id, nama, namakk, alamat, rt, rw} = req.body
 let myId = _id.toString().trim()
-console.log(myId)
-  
-  await db.connect();
-  const myabc = await Customers.findOne({myId})
 
-  if(myabc){
+await db.connect();
+  // const myabc = await Customers.findOne({myId})
 
-  
-  const user = await Customers.findOneAndUpdate({myId},{
+  // if(myabc){
+const user = await Customers.findByIdAndUpdate(myId, {
     rm : req.body.rm,
     nama : req.body.nama,
     namakk : req.body.namakk,
     alamat : req.body.alamat,
     rt : req.body.rt,
     rw : req.body.rw
-  },{
-    new: true
   });
-  const user1 = await user
 
-  let myUser = JSON.stringify(user1)
-   console.log("jdj",myUser)
-    await db.disconnect();
-    res.status(200).send(
-      { message: 'Product updated successfully',
-       myData:myUser}
+const user2 = JSON.stringify(user)
+
+ res.status(200).send({ message: 'Product updated successfully', myData:user2});
+  // const user1 = await user
+
+  // let myUser = JSON.stringify(user1)
+  //  console.log("jdj",myUser)
+  //   await db.disconnect();
+  //   res.status(200).send(
+  //     { message: 'Product updated successfully',
+  //      myData:myUser}
       
-      );
-  } else {
-    await db.disconnect();
-    res.status(404).send({
-      message: 'Product not found' });
-  }
+  //     );
+  // } else {
+  //   await db.disconnect();
+  //   res.status(404).send({
+  //     message: 'Product not found' });
+  // }
  
 };
 

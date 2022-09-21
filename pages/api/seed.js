@@ -1,25 +1,15 @@
-// import { connectToDatabase } from "../../lib/monggodb"
-// import userQ from "../../userQ"
+// import Customers from '../../lib/Customers';
+// import UserQ from '../../UserQ'
+// import db from '../../lib/db';
 
-// export default async function  handler(req, res) {
-
-//     try {
-//         // connect to the database
-//         let { db } = await connectToDatabase();
-     
-//         // const customer = await db.collection("customers").deleteMany({});
-//         await db.collection("customers").insertMany(userQ);
-
-//         return res.json({
-//             message: 'Post added successfully'});
-//     } catch (error) {
-//         // return an error
-//         return res.json({
-//             message: new Error(error).message,
-//             success: false,
-//         });
-//     }
-//   }
+// const handler = async (req, res) => {
+//   await db.connect();
+//   await Customers.deleteMany();
+//   await Customers.insertMany(UserQ);
+//   await db.disconnect();
+//   res.send({ message: 'seeded successfully' });
+// };
+// export default handler;
   
 
 
