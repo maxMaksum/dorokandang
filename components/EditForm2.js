@@ -27,13 +27,13 @@ function EditForm2() {
         setShowAdd(!showAdd)
         const data2 = await fetchAdd("/api/customer/customers2", dataM)
         setShowSpinner(false)
-        console.log(data2)
-        // setUsers([...users, {rm:data3.rm, 
-        //     nama:data3.nama, 
-        //     alamat:data3.alamat, 
-        //     rm:data3.rm,
-        //     rt:data3.rt}])
-        // alert(data2.data.message)
+         
+      
+        const YY = await data2.data.newUser
+        let myDataq = await JSON.parse(YY)
+       
+        setUsers([...users, myDataq])
+        alert(data2.data.message)
   
         setShowForm(!showForm)}
 
@@ -44,13 +44,10 @@ function EditForm2() {
         setShowSpinner(true)
 
         const res = await fetchUpdate(`/api/customer3/${dataM._id}`, dataM)
-       
-        alert(res.data.message)
-        const myX = res?.data
-        console.log ("xx",myX)
         setShowSpinner(false)
-        console.log(res)
+        alert(res.data.message)
         
+      
         let myDataq1 = await JSON.parse(res.data.myData)
         console.log(myDataq1)
         const myUserq = users.map(x=>{
@@ -67,7 +64,7 @@ function EditForm2() {
             }
         return x 
     })
-    console.log(myUserq)
+  
     setUsers(myUserq)
     setShowForm(false)
   

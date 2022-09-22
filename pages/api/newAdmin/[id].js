@@ -30,7 +30,6 @@ const getHandler = async (req, res) => {
   const admin = await User.findOne({email:req.query.id})
   const newAdmin = JSON.stringify(admin)
   
-  console.log(newAdmin)
   return res.json({
     message: 'Post added successfully',
     newAdmin:newAdmin,
@@ -41,22 +40,19 @@ const getHandler = async (req, res) => {
 
 const putHandler = async (req, res) => {
 console.log(req.body)
-const { _id, email, role} = req.body
+const {_id, email, role} = req.body
+
   await db.connect();
-  const myabc = await User.findOne({email:email})
-
-
-  if(myabc){
-  const user = await User.findOneAndUpdate({email},{
+  const user = await User.findByIdAndUpdate(_id, {
     email : req.body.email,
     role : req.body.role,
-   
   },{
-    new: true
+    new:true
   });
-  const user1 = await user
 
-};
+  const user2 = JSON.stringify(user)
+ 
+  res.send({ message: 'Product updated successfully', myData:user2 });
 }
 const deleteHandler = async (req, res) => {
   console.log(req.query.email)

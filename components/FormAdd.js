@@ -8,13 +8,22 @@ import SearchInput from "./SearchInput";
 function FormAdd() {
   const [dataM, setDataM] = useState({_id:"", rm:"", nama:"",namakk:"", alamat:"",rt:"",rw:""})
 
-  const { showForm, showSearchOK, showAddForm, setShowAddForm, showSpinner} = useContext(Store);
+  const { showForm, users, setUsers, showSearchOK, showAddForm, setShowAddForm, setShowSpinner} = useContext(Store);
   const router = useRouter()
 
   const saveForm = async(e)=>{
     e.preventDefault()
     const data2 = await fetchAdd("/api/customer/customers2", dataM)
-    // console.log(data2.data)
+    console.log(data2.data.newUser)
+    setShowSpinner(false)
+         
+      
+    const YY = await data2.data.newUser
+    let myDataq = await JSON.parse(YY)
+   
+    setUsers([...users, myDataq])
+    alert(data2.data.message)
+
     alert(data2?.data.message)
     setShowAddForm(!showAddForm)
   }

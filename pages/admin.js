@@ -36,14 +36,24 @@ function admin() {
 
     </div>
   )
+}else{
+  return <div>Login</div>
 }
 }
 
 export default admin
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context)
+  const session = await getSession(context)
+  if (!session) {
     return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
+  return {
       props:{session} // will be passed to the page component as props
     }
   }

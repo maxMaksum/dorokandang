@@ -50,7 +50,7 @@ const  {email} = req.body
   const product = await newProduct.save();
   
   const newUser1 = JSON.stringify(product)
-  console.log(newUser1)
+ 
  
 
   await db.disconnect();

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 const axios = require('axios').default;
 
 function FormAdmin() {
-    const [admin, setAdmin] = useState({email:"", role:false})
+    const [admin, setAdmin] = useState({email:"", role:false,_id:""})
     const [adminLists, setAdminLists] = useState([])
     const [searchAdmin, setSearchAdmin] = useState("")
     const [editAdmin, setEditAdmin] = useState(true)
@@ -12,12 +12,19 @@ function FormAdmin() {
         e.preventDefault()
         const dataNew = await fetchAdd("/api/admin/admin",admin)
         setNewInput(false)
-        // alert(dataNew.data.messege)
-        // setAdmin({email:"", role:false})
+        console.log(dataNew) 
+      
+        const YY = await dataNew.data.newUser
+        let myDataq = await JSON.parse(YY)
+        await setAdminLists([...adminLists, myDataq])
+        alert(dataNew.data.message)
+      
+        setAdmin({email:"", role:false, _id:""})
+        setEditAdmin(true)
 
     }
 
-    const editForm = async (e)=>{
+  const editForm = async (e)=>{
       e.preventDefault()
       setEditAdmin(false) 
   }
@@ -34,7 +41,7 @@ function FormAdmin() {
       e.preventDefault()
       setEditAdmin(true)
       setAdmin({
-        ...admin, email:x.email, role:x.role
+        ...admin, email:x.email, role:x.role, _id:x._id
       })
     
     }
@@ -43,7 +50,25 @@ function FormAdmin() {
       e.preventDefault()
       alert("are you sure update the admin?")
       const dataNew = await fetchUpdate(`/api/newAdmin/${admin.email}`, admin)
+      const YY = await dataNew.data.myData
+      let myDataq = await JSON.parse(YY)
+      const myUserq = adminLists.map(x=>{
+        if(x._id == myDataq._id){
+            return{
+                ...x, 
+                email:myDataq.email,
+                role:myDataq.role,
+               
+            }
+        }
+       return x 
+    })
+  
+    await setAdminLists(myUserq)
+    alert(dataNew.data.message)
+   
       setEditAdmin(true)   
+
     }
 
     const deleteForm = async (e, id) => {
@@ -51,6 +76,18 @@ function FormAdmin() {
       alert("are you sure to delete the admin?")
       const response =  fetchDelete(`/api/newAdmin/${admin.email}`)
       const data = await response
+ 
+      if(data.status==200){
+        const myUserq = adminLists.filter(x=>{
+          if(x._id !== admin._id){
+              return{
+                x
+              }
+          }
+         return x 
+      })
+      setAdminLists (myUserq)
+      }
       alert(data.data.message)
       return data      
    }
@@ -77,6 +114,7 @@ function FormAdmin() {
 
     const fetchUser = async (e)=>{
         e.preventDefault()
+        console.log(searchAdmin)
         const dataNew = await fetchAdmin(`/api/newAdmin/${searchAdmin}`)
         console.log(dataNew)
         const dataUser = JSON.parse(dataNew.data.newAdmin)
@@ -133,6 +171,7 @@ function FormAdmin() {
           e.preventDefault()
           setEditAdmin(true)
           setNewInput(true)
+          setAdmin({...admin, email:"", role:"false"})
         }  
 
   return (

@@ -46,11 +46,9 @@ const putHandler = async (req, res) => {
 
 const { _id, nama, namakk, alamat, rt, rw} = req.body
 let myId = _id.toString().trim()
-
+console.log(req.body)
 await db.connect();
-  // const myabc = await Customers.findOne({myId})
 
-  // if(myabc){
 const user = await Customers.findByIdAndUpdate(myId, {
     rm : req.body.rm,
     nama : req.body.nama,
@@ -58,33 +56,17 @@ const user = await Customers.findByIdAndUpdate(myId, {
     alamat : req.body.alamat,
     rt : req.body.rt,
     rw : req.body.rw
+  },{
+    new:true
   });
 
 const user2 = JSON.stringify(user)
-
- res.status(200).send({ message: 'Product updated successfully', myData:user2});
-  // const user1 = await user
-
-  // let myUser = JSON.stringify(user1)
-  //  console.log("jdj",myUser)
-  //   await db.disconnect();
-  //   res.status(200).send(
-  //     { message: 'Product updated successfully',
-  //      myData:myUser}
-      
-  //     );
-  // } else {
-  //   await db.disconnect();
-  //   res.status(404).send({
-  //     message: 'Product not found' });
-  // }
+ res.status(200).send({ message: 'Product updated successfully', myData:user2})
  
 };
 
 const deleteHandler = async (req, res) => {
   const myId = req.query.id[0].toString()
-  console.log(myId)
-
   await db.connect();
   const res2 = await Customers.findOneAndDelete({_id:myId})
   res.send({ message: 'Product deleted successfully' });
